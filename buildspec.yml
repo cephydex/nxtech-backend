@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      #- $(aws ecr get-login --no-include-email --region eu-west-3)
+       - echo $(aws ecr get-login-password --region eu-west-3) | docker login --username AWS --password-stdin 228059968143.dkr.ecr.eu-west-3.amazonaws.com/musiga-backend
+  build:
+    commands:
+      - docker build -t 228059968143.dkr.ecr.eu-west-3.amazonaws.com/musiga-backend .
+  post_build:
+    commands:
+      - docker push 228059968143.dkr.ecr.eu-west-3.amazonaws.com/musiga-backend:latest
+      - printf '[{"name":"musiga-backend","imageUri":"%s"}]' 228059968143.dkr.ecr.eu-west-3.amazonaws.com/musiga-backend > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json

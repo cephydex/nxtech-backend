@@ -1,0 +1,7 @@
+**/__pycache__
+.git
+.gitignore
+
+# Ignore logs directory and README files
+logs/
+*.md 
