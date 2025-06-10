@@ -16,12 +16,15 @@ class ClientsTable(Migration):
             table.foreign('title_id').references('id').on('titles')
             table.string("first_name")
             table.string("last_name")
+            table.string("other_names").nullable()
             table.string("email")
-            table.string("address1")
+            table.string("address")
             table.string("address2").nullable()
             table.string("mobile_no")
-            table.string("tel_no")
+            table.string("mobile_no2").nullable()
+            table.string("tel_no").nullable()
             table.date("dob")
+            table.string("company_name").nullable()
             table.enum("active_status", [
                     'active', 'unapproved', 'disabled', 'suspended'
                 ]).default('unapproved')
@@ -31,20 +34,20 @@ class ClientsTable(Migration):
             table.string("driver_license_no").nullable()
             table.string("driver_license_cat").nullable()
             
-            table.uuid("profession_id")
-            table.foreign("profession_id").references('professions').on('id')
+            table.uuid("professional_group_id").nullable()
+            table.foreign("professional_group_id").references('id').on('professional_groups')
+            table.uuid("profession_id").nullable()
+            table.foreign("profession_id").references('id').on('professions')
+            table.uuid("biz_intro_id").nullable()
+            table.foreign("biz_intro_id").references('id').on('biz_introducers')
             table.uuid("nationality_id")
-            table.foreign("nationality_id").references('nationalities').on('id')
+            table.foreign("nationality_id").references('id').on('nationalities')
             table.uuid("created_by")
-            table.foreign("created_by").references('users').on('id')
+            table.foreign("created_by").references('id').on('users')
             table.uuid("login_id").nullable()
-            table.foreign("login_id").references('users').on('id')
+            table.foreign("login_id").references('id').on('users')
 
             table.timestamps()
-
-            # id, Title, name, long_name, address1, address2, mail_address
-            # dob, status, professional_group, profession, nationality, mobile_no, tel_no
-            # driver_license_no, driver_license_cat, email, account_no
             
     def down(self):
         """

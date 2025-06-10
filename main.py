@@ -49,10 +49,10 @@ def create_app():
 app = create_app()
 
 
-app.include_router(auth_router, prefix="/api/v1")
 app.include_router(user_router, prefix="/api/v1")
 app.include_router(setup_router, prefix="/api/v1")
 # app.include_router(admin_router, prefix="/api/v1")
+# app.include_router(auth_router, prefix="/api/v1")
 # app.include_router(pmt_router, prefix="/api/v1")
 
 @app.get("/")

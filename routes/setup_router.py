@@ -307,3 +307,81 @@ async def delete_profession(id: str, token:str=Depends(auth_bearer)):
             "status_code": HTTPStatus.OK,
             'data': result,
         }
+
+
+from repos.client import ClientRepo
+from schemas.Client import ClientCreate, ClientResult
+@router.post("/clients")
+async def create_client(req_data:ClientCreate, request:Request, token:str=Depends(auth_bearer)):
+    userId = auth_bearer.get_user_id(token)
+    req_data.created_by = str(userId)
+    # print('USER ID', userId, req_data)
+
+    clientId = getNextMemberId()
+    req_data.account_no = clientId
+
+    result = await ClientRepo.create(req_data)
+    res_data = result["data"] if result["data"] else None
+    logger.warning(res_data)
+    
+    msg = "Client created successfully!"
+    code = HTTPStatus.CREATED
+    if not res_data or not res_data['created_at']:
+        msg = "Client could not be created."
+        code = HTTPStatus.BAD_REQUEST
+
+    if result["errors"]:
+        res_data = result["errors"]
+    
+    return GenResponse(
+                message=msg,
+                status_code=code, 
+                data=result,
+            )
+
+
+@router.get("/clients")
+def get_client_list(request:Request, token:str=Depends(auth_bearer)):
+    result = ClientRepo.fetch_all()
+    
+    return {
+            "message": "Client(s) retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
+
+
+
+
+@router.get("/clients/{id}")
+async def get_client(id: str, token:str=Depends(auth_bearer)):
+    result = ClientRepo.fetch_by_id(id)
+    
+    return {
+            "message": "Client retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
+
+def getNextMemberId():
+    lastId = ClientRepo.getLastClientId()
+    # print('TEMP', lastId)
+    member_id = None
+    prefix = "NXT"
+    if lastId and lastId['account_no']:
+        old_id = lastId['account_no']
+        member_id = processNewClientId(old_id, prefix)
+    else:
+        member_id = f"{prefix}00001"
+    
+    return member_id
+
+
+def processNewClientId(old_id:str, prefix:str):
+    num_part = int(old_id[3:])
+    logger.warning("PROC 1: mID %s -- %d" % (old_id, num_part))
+    num_part += 1
+    num_str = f'{num_part:05d}'
+    new_id = prefix + num_str
+    logger.warning("PROC 2: mID %s -- %d" % (new_id, num_part))
+    return new_id
