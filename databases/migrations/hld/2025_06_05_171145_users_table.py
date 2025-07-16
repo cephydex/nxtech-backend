@@ -16,6 +16,8 @@ class UsersTable(Migration):
             table.enum("active_status", ['pending', 'active', 'disabled']).default('active')
             
             table.uuid("role_id")
+            table.timestamps("last_login").nullable()
+            table.text("remarks").nullable()
             table.foreign('role_id').references('id').on('user_roles')
             table.timestamps()
 
@@ -24,3 +26,11 @@ class UsersTable(Migration):
         Revert the migrations.
         """
         self.schema.drop("users")
+
+# System Role Level (e.g., Admin, Read-Only, Edit, Approver)
+# Access Permissions / Modules Assigned (e.g., Client Management, Policy, Finance, Commissions, Reports)
+# User Status (Active / Inactive / Suspended)
+# Date Added to System
+# Last Login Date (for audit tracking)
+# Supervisor or Reporting Line (optional – useful for workflow approvals)
+# Remarks / Notes

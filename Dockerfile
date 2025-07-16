@@ -2,7 +2,6 @@ FROM python:3.11-alpine
 
 WORKDIR /app
 
-# Copy the requirements.txt file into the container
 COPY requirements.txt .
 
 # Install the Python dependencies

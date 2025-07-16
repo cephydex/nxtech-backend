@@ -1,10 +1,9 @@
-"""MigrtationForRolesTable Migration."""
+"""TitlesTable Migration."""
 
 from masoniteorm.migrations import Migration
-import uuid
 
 
-class MigratationForTitlesTable(Migration):
+class TitlesTable(Migration):
     def up(self):
         """
         Run the migrations.
@@ -12,7 +11,6 @@ class MigratationForTitlesTable(Migration):
         with self.schema.create("titles") as table:
             table.uuid("id").primary()
             table.string("name").unique()
-
             table.timestamps()
             table.table_comment("Titles table")
 

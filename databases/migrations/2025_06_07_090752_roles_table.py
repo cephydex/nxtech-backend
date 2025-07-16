@@ -1,10 +1,9 @@
-"""MigrtationForRolesTable Migration."""
+"""RolesTable Migration."""
 
 from masoniteorm.migrations import Migration
-import uuid
 
 
-class MigratationForRolesTable(Migration):
+class RolesTable(Migration):
     def up(self):
         """
         Run the migrations.
