@@ -2,16 +2,19 @@ from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 
 
-class UserBase(BaseModel):
-    username: str
+class UserLoginCreate(BaseModel):
     email: str
-    password: str
+    username: Optional[str] = None
+    password: Optional[str] = None
     active_status: Optional[str] = 'active'
-    # blocked_reason: Optional[str] = None
     role_id: str
 
-    created_at: Optional[str] = None
-    updated_at: Optional[str] = None
+class UserBase(UserLoginCreate):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    initials: Optional[str] = None
+    dept_id: Optional[str] = None
+    supervisor_id: Optional[str] = None
 
 
 class UserCreate(UserBase):
@@ -20,7 +23,6 @@ class UserCreate(UserBase):
 
 class UserResult(UserBase):
     id:str
-
     model_config = ConfigDict(from_attributes=True)
 
 

@@ -18,6 +18,7 @@ from repos.profession_n_group import ProfessionalGroupRepo, ProfessionRepo
 import logging, traceback
 from schemas.Resp import GenResponse
 from repos.bank import BankRepo
+from repos.user import UserRepo
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +34,17 @@ auth_bearer = JWTBearer()
 @router.get("/departments")
 def get_department_list(request:Request, token:str=Depends(auth_bearer)):
     result = DepartmentRepo.fetch_all()
+    
+    return {
+            "message": "Departments retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
+
+
+@router.get("/users/min")
+def get_user_list(request:Request, token:str=Depends(auth_bearer)):
+    result = UserRepo.fetch_all_min()
     
     return {
             "message": "Departments retrieved successfully!",

@@ -1,6 +1,6 @@
 from schemas.User import (
         # RoleCreate, RoleResult, 
-        UserCreate, UserResult, UserUpdateProfile
+        UserCreate, UserLoginCreate, UserResult, UserUpdateProfile
     )
 # from models.UserRole import UserRole
 from models.User import User
@@ -14,24 +14,47 @@ logger = logging.getLogger(__name__)
 class UserRepo:
 
     async def create(user: UserCreate):
-        res = {
-            "errors": {},
-            "data": None
-        }
+        res = {"errors": {}, "data": None}
 
         try:
             db_item= User()
             db_item.id= str(uuid.uuid4())
-            db_item.last_name= user.email
-            db_item.first_name= user.username
-            db_item.sex= user.active_status
+            db_item.email= user.email
+            db_item.username= user.username
+            db_item.first_name= user.first_name
+            db_item.last_name= user.last_name
+            db_item.initials= user.initials
+            db_item.dept_id= user.dept_id
+            db_item.supervisor_id= user.supervisor_id
+            db_item.role_id= str(user.role_id)            
+            db_item.save()
+            res['data'] = db_item
+        except Exception as ex:
+            if 'unique constraint' in str(ex):
+                logger.error("User %s already exists" % user.first_name+' | '+user.last_name)
+                res['errors']["unique_constraint"] = str(ex)
+            logger.error("CREATE ERR :: %s" % str(ex))
+            traceback.print_exc()
+
+        return res
+
+    async def create_login(user: UserLoginCreate):
+        res = {"errors": {}, "data": None}
+
+        try:
+            db_item= User()
+            db_item.id= str(uuid.uuid4())
+            db_item.email= user.email
+            db_item.username= user.username
+            db_item.password= user.password
+            db_item.active_status= user.active_status
             
             db_item.role_id= str(user.role_id)
             db_item.save()
             res['data'] = db_item
         except Exception as ex:
             if 'unique constraint' in str(ex):
-                logger.error("User %s already exists" % user.username+' | '+user.email)
+                logger.error("User login %s already exists" % user.username+' | '+user.email)
                 res['errors']["unique_constraint"] = str(ex)
             logger.error("CREATE ERR :: %s" % str(ex))
             traceback.print_exc()
@@ -102,13 +125,20 @@ class UserRepo:
         return res
 
 
-    # def fetch_all() -> List[AdminResult]:
-    #     res = Role.all()
-    #     all_data = [x.as_dict() for x in res]
-    #     # print("serialized", all_data)
-    #     # check_data = all_vehicles = [{"vehicle": x.vehicle} for x in vehicle_sum]
+    def fetch_all() -> List[UserResult]:
+        tmp_res = User.all()
+        res = tmp_res.serialize() if tmp_res else None
+        # all_data = [x.as_dict() for x in res]
+        # print("serialized", all_data)
+        # check_data = all_vehicles = [{"vehicle": x.vehicle} for x in vehicle_sum]
 
-    #     return all_data
+        return res
+
+
+    def fetch_all_min() -> List[UserResult]:
+        res = User.all(['id', 'email', 'first_name', 'last_name'])
+
+        return res.serialize()
     
 
     # def fetch_by_phone(phone:str) -> AdminResult:

@@ -14,8 +14,6 @@ class UsersTable(Migration):
             table.string("username").unique()
             table.string("password")
             table.enum("active_status", ['active', 'inactive', 'suspended']).default('active')
-            # table.uuid("dept_id")
-            # table.foreign("dept_id").references('id').on('departments')
             
             table.uuid("role_id")
             table.timestamp("last_login").nullable()
