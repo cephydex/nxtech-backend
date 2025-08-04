@@ -22,11 +22,11 @@ JWT_ALGORITHM:str=os.getenv('AUTH_ALGORITHMS')
 def has_token_expired(auth_user_id:str,expires_at:float,token:str):
     try:
         query="""
-        query getRecentToken($owner:String){
-            expired_access_token(order_by:{created_at:desc},limit:1,where:{owner:{_eq:$owner}}){
-                token
+            query getRecentToken($owner:String){
+                expired_access_token(order_by:{created_at:desc},limit:1,where:{owner:{_eq:$owner}}){
+                    token
+                }
             }
-        }
         """
         plain_text=f'{auth_user_id}@{expires_at}'
 

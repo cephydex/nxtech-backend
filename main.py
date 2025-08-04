@@ -19,9 +19,18 @@ from strawberry.fastapi import GraphQLRouter
 log_level = logging.INFO
 if os.environ.get("DEBUG"):
     log_level = logging.DEBUG
+print('DEBUG MODE', log_level)
+
 logging.basicConfig(
-    format="%(asctime)s %(levelname)s %(message)s", datefmt="%d/%m/%Y %I:%M:%S%p"
+    level=logging.DEBUG,
+    format="%(levelname)s | %(asctime)s | %(name)-15s | %(funcName)s() | L%(lineno)-2d | %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('app.log', mode='a'),
+        # logging.FileHandler('app.log', mode='w')
+    ]
 )
+
 logger = logging.getLogger(__name__)
 
 def create_app():
@@ -32,9 +41,7 @@ def create_app():
         prefix="/api/v1"
     )
 
-    origins = [
-        "*"
-    ]
+    origins = ["*"]
 
     app.add_middleware(
         CORSMiddleware,
@@ -47,8 +54,6 @@ def create_app():
     return app
 
 app = create_app()
-
-
 app.include_router(user_router, prefix="/api/v1")
 app.include_router(setup_router, prefix="/api/v1")
 # app.include_router(admin_router, prefix="/api/v1")

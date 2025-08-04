@@ -18,7 +18,7 @@ class GenResponse(BaseModel):
         return '(message=%s, code_status=%s, data=%s)' % (self.message, self.status_code, self.data,)
 
     message:str
-    data:Optional[dict] = []
+    data:Optional[dict | list] = []
     status_code:int
 
 

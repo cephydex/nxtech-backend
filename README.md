@@ -39,8 +39,11 @@ masonite-orm migrate -m 2025_06_07_090752_roles_table.py
 # DB Migration & Seeding
 masonite-orm migration user_roles_table<br>
 masonite-orm migrate -m 2025_06_07_090752_roles_table.py
-
-masonite-orm model UserRole --directory=models
+# masonite-orm migrate:rollback -m 2025_06_07_090752_roles_table
 
 masonite-orm seed user_roles<br>
 masonite-orm seed:run user_roles
+
+masonite-orm model UserRole --directory=models
+
+

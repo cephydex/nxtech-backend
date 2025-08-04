@@ -80,7 +80,7 @@ class BanksTableSeeder(Seeder):
                 "code": "UBA",
             },
             {
-                "id": "b0000000-fc36-0000-b000-00000000001",
+                "id": "b0000000-fc36-0000-b000-000000000015",
                 "name": "ACCESS BANK LTD",
                 "code": "ACB",
             },

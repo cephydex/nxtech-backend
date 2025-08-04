@@ -10,33 +10,31 @@ class BizIntroducersTable(Migration):
         """
         with self.schema.create("biz_introducers") as table:
             table.uuid("id").primary()
-            table.uuid("title_id")
+            table.uuid("title_id").nullable()
             table.foreign('title_id').references('id').on('titles')
-            table.string("full_name_introducer").nullable()
-            table.string("primary_contact_name").nullable()
+            table.string("full_name").nullable()
+            table.string("primary_contact").nullable()
             table.string("email")
             table.string("contact_no")
             table.string("address").nullable()
             table.string("location").nullable()
-            
             table.string("id_type").nullable()
             table.string("id_number").nullable()
             table.string("business_name").nullable()
             table.string("business_reg_no").nullable()
             table.string("tin_no").nullable()
-            
-            table.string("tin_no").nullable()
-            table.string("bank_id").nullable()
+             
+            table.uuid("bank_id").nullable()
             table.foreign('bank_id').references('id').on('banks')
             table.string("bank_account_name").nullable()
             table.string("bank_branch_name").nullable()
             table.string("bank_account_no").nullable()
             table.text("notes").nullable()
-            
             table.decimal("commission_rate", 10, 2).nullable()
+            table.string("biz_agreement_doc").nullable()
             table.uuid("user_id").nullable()
             table.foreign('user_id').references('id').on('users')
-            table.unique(['first_name', 'last_name', 'contact_no'])
+            # table.unique(['first_name', 'last_name', 'contact_no'])
             table.enum("itype", ['Individual', 'Company']).default('Individual')
             table.enum("active_status", ['active', 'disabled']).default('active')
             table.timestamps()
@@ -55,6 +53,7 @@ class BizIntroducersTable(Migration):
 # Address/Location
 # ID Type
 # ID Number
+
 # Business Registration Number
 # Tax Identification Number
 # Bank Name
