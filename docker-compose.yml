@@ -1,6 +1,6 @@
 # version: '3'
 services:
-  nxtech-app:
+  nxtech-be:
     container_name: nxtech-be
     restart: always
     build:

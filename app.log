@@ -45,3 +45,80 @@ DEBUG | 2025-08-04 17:43:15,206 | routes.setup_router | create_biz_introducer() 
 DEBUG | 2025-08-04 17:43:15,207 | routes.setup_router | validate_fields() | L239 | validate individual
 DEBUG | 2025-08-04 17:43:15,208 | routes.setup_router | create_biz_introducer() | L270 | 
 WARNING | 2025-08-04 17:43:15,267 | routes.setup_router | create_biz_introducer() | L274 | {'id': '8bfc3e05-06f3-4a0b-9041-7259ba344d0d', 'title_id': '00000000-0000-4000-8000-a10000000000', 'full_name': 'Janet Jackson', 'primary_contact': '0200000002', 'commission_rate': Decimal('1.00'), 'email': 'janet@mail.com', 'contact_no': '', 'address': 'Accra', 'location': 'Accra', 'business_name': 'Unleash', 'business_reg_no': '13423423423-B', 'id_type': 'ghana-card', 'id_number': 'GHA-000000000-1', 'tin_no': '1234354253', 'bank_id': 'b0000000-fc36-0000-b000-000000000003', 'bank_account_name': 'Unleash', 'bank_branch_name': 'Accra', 'bank_account_no': '0324235345232', 'notes': '', 'biz_agreement_doc': '', 'itype': 'Individual', 'user_id': '20000000-0000-4001-0000-010000000000', 'active_status': 'active', 'created_at': '2025-08-04T17:43:15+00:00', 'updated_at': '2025-08-04T17:43:15+00:00'}
+ERROR | 2025-08-06 16:41:25,560 | repos.prospect  | create() | L49 | column "account_manager" of relation "prospects" does not exist
+LINE 1: ...d", "client_type", "company_name", "year_of_inc", "account_m...
+                                                             ^
+
+WARNING | 2025-08-06 16:41:25,562 | routes.setup_router | create_prospect() | L322 | None
+ERROR | 2025-08-06 16:42:07,103 | repos.prospect  | create() | L49 | column "account_manager" of relation "prospects" does not exist
+LINE 1: ...d", "client_type", "company_name", "year_of_inc", "account_m...
+                                                             ^
+
+WARNING | 2025-08-06 16:42:07,103 | routes.setup_router | create_prospect() | L322 | None
+ERROR | 2025-08-06 16:43:42,085 | repos.prospect  | create() | L49 | column "account_manager" of relation "prospects" does not exist
+LINE 1: ...d", "client_type", "company_name", "year_of_inc", "account_m...
+                                                             ^
+
+DEBUG | 2025-08-06 16:43:42,087 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 16:43:42,088 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': None}
+WARNING | 2025-08-06 16:43:42,088 | routes.setup_router | create_prospect() | L324 | None
+ERROR | 2025-08-06 16:46:47,921 | repos.prospect  | create() | L49 | column "account_manager" of relation "prospects" does not exist
+LINE 1: ...d", "client_type", "company_name", "year_of_inc", "account_m...
+                                                             ^
+
+DEBUG | 2025-08-06 16:46:47,922 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 16:46:47,923 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': None}
+WARNING | 2025-08-06 16:46:47,924 | routes.setup_router | create_prospect() | L324 | None
+ERROR | 2025-08-06 17:06:18,475 | repos.prospect  | create() | L49 | null value in column "source" of relation "prospects" violates not-null constraint
+DETAIL:  Failing row contains (4a62fe8c-da56-4c01-a450-d4b6d89a02f5, Individual, null, null, Madina, hansonat@mail.com, 23320236172612, 00000000-0000-4000-8000-a10000000000, Hanson, Atinga, null, M, 60000000-0000-0000-0000-010000000084, null, 20000000-0000-4001-0000-010000000000, active, 2025-08-06 17:06:18+00, 2025-08-06 17:06:18+00).
+
+DEBUG | 2025-08-06 17:06:18,476 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:06:18,477 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': None}
+WARNING | 2025-08-06 17:06:18,478 | routes.setup_router | create_prospect() | L324 | None
+ERROR | 2025-08-06 17:08:13,083 | repos.prospect  | create() | L49 | null value in column "source" of relation "prospects" violates not-null constraint
+DETAIL:  Failing row contains (1a5fe456-d814-4f56-ae6f-42eed44aee24, Individual, null, null, Madina, hansonat@mail.com, 23320236172612, 00000000-0000-4000-8000-a10000000000, Hanson, Atinga, null, M, 60000000-0000-0000-0000-010000000084, null, 20000000-0000-4001-0000-010000000000, active, 2025-08-06 17:08:13+00, 2025-08-06 17:08:13+00).
+
+DEBUG | 2025-08-06 17:08:13,083 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:08:13,084 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': None}
+WARNING | 2025-08-06 17:08:13,084 | routes.setup_router | create_prospect() | L324 | None
+DEBUG | 2025-08-06 17:12:52,317 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:12:52,318 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': {'id': '357a5b53-d693-417b-af72-599b6ff33895', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:12:52+00:00', 'updated_at': '2025-08-06T17:12:52+00:00'}}
+WARNING | 2025-08-06 17:12:52,318 | routes.setup_router | create_prospect() | L324 | {'id': '357a5b53-d693-417b-af72-599b6ff33895', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:12:52+00:00', 'updated_at': '2025-08-06T17:12:52+00:00'}
+DEBUG | 2025-08-06 17:19:51,838 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:19:51,839 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': {'id': '8f9e9e89-c2e9-4eb3-b946-b643ec971ee5', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:19:51+00:00', 'updated_at': '2025-08-06T17:19:51+00:00'}}
+WARNING | 2025-08-06 17:19:51,840 | routes.setup_router | create_prospect() | L332 | PS RES
+WARNING | 2025-08-06 17:19:51,841 | routes.setup_router | create_prospect() | L333 | <coroutine object ProspectStageRepo.create at 0x767f4cccd740>
+WARNING | 2025-08-06 17:19:51,842 | routes.setup_router | create_prospect() | L334 | {'id': '8f9e9e89-c2e9-4eb3-b946-b643ec971ee5', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:19:51+00:00', 'updated_at': '2025-08-06T17:19:51+00:00'}
+DEBUG | 2025-08-06 17:24:33,898 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:24:33,899 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': {'id': 'c0196af6-a949-4fc9-ba42-c4087b72a551', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:24:33+00:00', 'updated_at': '2025-08-06T17:24:33+00:00'}}
+ERROR | 2025-08-06 17:24:33,901 | repos.prospect  | create() | L93 | 'dict' object has no attribute 'prospect_id'
+WARNING | 2025-08-06 17:24:33,902 | routes.setup_router | create_prospect() | L332 | PS RES
+WARNING | 2025-08-06 17:24:33,903 | routes.setup_router | create_prospect() | L333 | {'errors': {}, 'data': None}
+WARNING | 2025-08-06 17:24:33,904 | routes.setup_router | create_prospect() | L334 | {'id': 'c0196af6-a949-4fc9-ba42-c4087b72a551', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:24:33+00:00', 'updated_at': '2025-08-06T17:24:33+00:00'}
+ERROR | 2025-08-06 17:32:12,255 | repos.prospect  | create() | L47 | Prospect Individual already exists | (Hanson, Atinga)
+ERROR | 2025-08-06 17:32:12,256 | repos.prospect  | create() | L49 | duplicate key value violates unique constraint "prospects_email_contact_no_unique"
+DETAIL:  Key (email, contact_no)=(hansonat@mail.com, 23320236172612) already exists.
+
+DEBUG | 2025-08-06 17:32:12,257 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:32:12,258 | routes.setup_router | create_prospect() | L322 | {'errors': {'unique_constraint': 'duplicate key value violates unique constraint "prospects_email_contact_no_unique"\nDETAIL:  Key (email, contact_no)=(hansonat@mail.com, 23320236172612) already exists.\n'}, 'data': None}
+WARNING | 2025-08-06 17:32:12,260 | routes.setup_router | create_prospect() | L334 | None
+DEBUG | 2025-08-06 17:32:47,207 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:32:47,207 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': {'id': '146c4b4f-f005-4182-9846-d5560fb6b818', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:32:47+00:00', 'updated_at': '2025-08-06T17:32:47+00:00'}}
+ERROR | 2025-08-06 17:32:47,209 | repos.prospect  | create() | L93 | 'dict' object has no attribute 'prospect_id'
+WARNING | 2025-08-06 17:32:47,210 | routes.setup_router | create_prospect() | L332 | PS RES
+WARNING | 2025-08-06 17:32:47,211 | routes.setup_router | create_prospect() | L333 | {'errors': {}, 'data': None}
+WARNING | 2025-08-06 17:32:47,211 | routes.setup_router | create_prospect() | L334 | {'id': '146c4b4f-f005-4182-9846-d5560fb6b818', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:32:47+00:00', 'updated_at': '2025-08-06T17:32:47+00:00'}
+ERROR | 2025-08-06 17:36:06,476 | repos.prospect  | create() | L93 | 'dict' object has no attribute 'prospect_id'
+WARNING | 2025-08-06 17:36:06,477 | routes.setup_router | create_prospect() | L334 | PS RES
+WARNING | 2025-08-06 17:36:06,477 | routes.setup_router | create_prospect() | L335 | {'errors': {}, 'data': None}
+ERROR | 2025-08-06 17:36:56,678 | repos.prospect  | create() | L93 | 'dict' object has no attribute 'prospect_id'
+WARNING | 2025-08-06 17:36:56,679 | routes.setup_router | create_prospect() | L335 | PS RES
+WARNING | 2025-08-06 17:36:56,679 | routes.setup_router | create_prospect() | L336 | {'errors': {}, 'data': None}
+ERROR | 2025-08-06 17:37:38,938 | repos.prospect  | create() | L93 | 'dict' object has no attribute 'prospect_id'
+WARNING | 2025-08-06 17:37:38,939 | routes.setup_router | create_prospect() | L335 | PS RES
+WARNING | 2025-08-06 17:37:38,940 | routes.setup_router | create_prospect() | L336 | {'errors': {}, 'data': None}
+WARNING | 2025-08-06 17:42:51,776 | routes.setup_router | create_prospect() | L339 | PS RES
+WARNING | 2025-08-06 17:42:51,777 | routes.setup_router | create_prospect() | L340 | {'errors': {}, 'data': {'prospect_id': '146c4b4f-f005-4182-9846-d5560fb6b818', 'stage': 'Initial talks', 'notes': 'Just at the talking stage', 'created_at': '2025-08-06T17:42:51+00:00', 'updated_at': '2025-08-06T17:42:51+00:00'}}
+DEBUG | 2025-08-06 17:46:24,613 | routes.setup_router | create_prospect() | L321 | RES
+DEBUG | 2025-08-06 17:46:24,614 | routes.setup_router | create_prospect() | L322 | {'errors': {}, 'data': {'id': 'd2cd6507-8d4d-43d7-8a99-1d6ac3e61be3', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:46:24+00:00', 'updated_at': '2025-08-06T17:46:24+00:00'}}
+WARNING | 2025-08-06 17:46:24,615 | routes.setup_router | create_prospect() | L324 | {'id': 'd2cd6507-8d4d-43d7-8a99-1d6ac3e61be3', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Hanson', 'last_name': 'Atinga', 'other_names': None, 'email': 'hansonat@mail.com', 'contact_no': '23320236172612', 'sex': 'M', 'address_loc': 'Madina', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Referral', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-06T17:46:24+00:00', 'updated_at': '2025-08-06T17:46:24+00:00'}

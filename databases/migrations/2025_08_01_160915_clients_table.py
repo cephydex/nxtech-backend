@@ -24,7 +24,7 @@ class ClientsTable(Migration):
             table.enum("active_status", [
                     'active', 'inactive', 'dormant', 'terminated'
                 ]).default('inactive')
-            table.string("notes").nullable()
+            table.text("notes").nullable()
             table.uuid("account_manager").nullable() # also relationship officer
             table.foreign("account_manager").references('id').on('users')
             table.uuid("claims_manager").nullable() # also claims officer
