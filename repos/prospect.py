@@ -57,7 +57,7 @@ class ProspectRepo:
 
 
     def fetch_all() -> List[ProspectResult]:
-        result =  Prospect.with_('title').all()
+        result =  Prospect.with_('title').with_('stages').all()
         
         return result.serialize()
 
@@ -79,7 +79,6 @@ class ProspectStageRepo:
         
         try:
             db_item = ProspectStage()
-            # db_item.id=str(uuid.uuid4()),
             db_item.prospect_id=e.prospect_id,
             db_item.stage=e.stage,
             db_item.notes=e.notes,
@@ -93,3 +92,9 @@ class ProspectStageRepo:
             logger.error(str(ex))
 
         return res
+    
+
+    def fetch_by_prospect(prospect_id:str) -> List[ProspectResult]:
+        result =  ProspectStage.where('prospect_id', prospect_id).all()
+        
+        return result.serialize()

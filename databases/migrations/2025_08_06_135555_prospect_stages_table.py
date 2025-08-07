@@ -21,3 +21,8 @@ class ProspectStagesTable(Migration):
         Revert the migrations.
         """
         self.schema.drop("prospect_notes")
+        
+# stages
+# Initial Contact, Receipt of Document or Insurance Details, Quotation Sent, Client Reviewing
+# Negotiation, Awaiting Decision, Closed – Won, Closed – Lost
+

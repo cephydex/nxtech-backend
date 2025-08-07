@@ -318,19 +318,15 @@ async def create_prospect(req_d:ProspectCreate, request:Request, token:str=Depen
     req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
 
     result = await ProspectRepo.create(req_d)
-    # logger.debug('RES')
-    # logger.debug(result)
     res_data = result["data"] if result["data"] else None
     logger.warning(res_data)
     if res_data:
         psc = ProspectStageCreate
-        # psc.prospect_id = "146c4b4f-f005-4182-9846-d5560fb6b818"
         psc.prospect_id = res_data["id"]
         psc.stage = req_d.stage
         psc.notes = req_d.notes
         # add prospect stage
         ps_rs = await ProspectStageRepo.create(psc)
-        logger.warning("PS RES")
         logger.warning(ps_rs)
     
     msg = "Prospect created successfully!"
@@ -343,21 +339,49 @@ async def create_prospect(req_d:ProspectCreate, request:Request, token:str=Depen
         res_data = result["errors"]
     
     return GenResponse(
-                message=msg,
-                status_code=code, 
-                data=result,
+                message=msg, data=result, status_code=code, 
             )
 
 
-# @router.get("/prospects")
-# def get_prospect_list(request:Request, token:str=Depends(auth_bearer)):
-#     result = ProspectRepo.fetch_all()
+@router.get("/prospects")
+def get_prospect_list(request:Request, token:str=Depends(auth_bearer)):
+    result = ProspectRepo.fetch_all()
     
-#     return {
-#             "message": "Prospects(s) retrieved successfully!",
-#             "status_code": HTTPStatus.OK,
-#             'data': result,
-#         }
+    return {
+            "message": "Prospects(s) retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
+
+@router.post("/prospect-stages")
+async def create_prospect_stage(req_d:ProspectStageCreate, token:str=Depends(auth_bearer)):
+    result = await ProspectStageRepo.create(req_d)
+    logger.warning(result)
+    res_data = result["data"] if result["data"] else None
+    logger.warning(res_data)
+    # if res_data:
+    msg = "Prospect stage created successfully!"
+    code = HTTPStatus.CREATED
+    if not res_data or not res_data['created_at']:
+        msg = "Prospect stage could not be created."
+        code = HTTPStatus.BAD_REQUEST
+
+    if result["errors"]:
+        res_data = result["errors"]
+    
+    return GenResponse(
+                message=msg, data=result, status_code=code, 
+            )
+
+@router.get("/prospect-stages/{prospect_id}")
+def get_prospect_stage_list(prospect_id:str, token:str=Depends(auth_bearer)):
+    result = ProspectStageRepo.fetch_by_prospect(prospect_id)
+    
+    return {
+            "message": "Prospect stage(s) retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
 
 
 from repos.client import ClientRepo, ClientContactRepo
