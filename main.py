@@ -3,10 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes.admin.auth_router import router as auth_router
 from routes.user_router import router as user_router
 from routes.setup_router import router as setup_router
+from routes.func_router import router as func_router
 
-# from routes.admin.router import router as admin_router
-# from routes.admin.pmt_router import router as pmt_router
-# from routes.member import router as member_router
 from utils.file_uploader import *
 import logging
 import dotenv
@@ -56,7 +54,7 @@ def create_app():
 app = create_app()
 app.include_router(user_router, prefix="/api/v1")
 app.include_router(setup_router, prefix="/api/v1")
-# app.include_router(admin_router, prefix="/api/v1")
+app.include_router(func_router, prefix="/api/v1")
 # app.include_router(auth_router, prefix="/api/v1")
 # app.include_router(pmt_router, prefix="/api/v1")
 

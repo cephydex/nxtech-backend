@@ -1,16 +1,64 @@
 """PolicyTypesTableSeeder Seeder."""
 
 from masoniteorm.seeds import Seeder
-
+from models.PolicyType import PolicyType
 
 class PolicyTypesTableSeeder(Seeder):
     def run(self):
         """Run the database seeds."""
+        
+        PolicyType.bulk_create([
+            {
+                "id": "00000000-0000-5000-8000-a10000000000", 
+                "cat_id": "00000000-0000-3000-8000-a10000000000", 
+                "name": "Comprehensive",
+                "description": "Comprehensive",
+                "commission": 16.50,
+            },
+            {
+                "id": "00000000-0000-5000-8000-a10000000001", 
+                "cat_id": "00000000-0000-3000-8000-a10000000000", 
+                "name": "Third Party",
+                "description": "Third Party",
+                "commission": 10.00,
+            },
+            {
+                "id": "00000000-0000-5000-8000-a10000000002", 
+                "cat_id": "00000000-0000-3000-8000-a10000000000", 
+                "name": "Third Party Fire & Theft",
+                "description": "Third Party Fire & Theft",
+                "commission": 10.00,
+            },
+        ])
+
+        PolicyType.bulk_create([
+            {
+                "id": "00000000-0000-5000-8000-a10000000003", 
+                "cat_id": "00000000-0000-3000-8000-a10000000001", 
+                "name": "Assets All Risks",
+                "description": "Assets All Risks",
+                "commission": 21.00,
+            },
+            {
+                "id": "00000000-0000-5000-8000-a10000000004", 
+                "cat_id": "00000000-0000-3000-8000-a10000000003", 
+                "name": "Marine Cargo",
+                "description": "Marine Cargo",
+                "commission": 15.00,
+            },
+            {
+                "id": "00000000-0000-5000-8000-a10000000005", 
+                "cat_id": "00000000-0000-3000-8000-a10000000003", 
+                "name": "Marine Hull",
+                "description": "Marine Hull",
+                "commission": 15.00,
+            },
+            
+        ])
+
         pass
 
-    # Motor – Comprehensive	16.50%
-    # Motor – Third Party	10.00%
-    # Motor – Third Party Fire & Theft	10.00%
+    
     # Assets All Risks	21.00%
     # Fire & Allied Perils	21.00%
     # Consequential Loss	21.00%

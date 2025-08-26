@@ -1,27 +1,23 @@
 from fastapi import APIRouter, Response, Depends, HTTPException
 from fastapi import Request
 from http import HTTPStatus
-from utils.exception_handler import *
 from utils.cjwt import JWTBearer
-from utils.file_uploader import *
 from schemas.Resp import GenResponse
 from repos.nat_n_dept import DepartmentRepo, NationalityRepo
 from repos.title import TitleRepo
-from schemas.Department import DepartmentCreate, DepartmentResult
-from schemas.Title import TitleCreate, TitleResult
-from repos.agent_n_bizintroducer import AgentRepo
+from schemas.Department import DepartmentCreate
+from schemas.Title import TitleCreate
 from repos.biz_introducer import BizIntroducerRepo
-from schemas.Agent import AgentCreate, AgentResult
-from schemas.BizIntroducer import BizIntroducerCreate, BizIntroducerResult
-from schemas.Profession import ProfessionCreate, ProfessionResult, ProfessionalGroupCreate, ProfessionalGroupResult
+from schemas.BizIntroducer import BizIntroducerCreate
+from schemas.Profession import ProfessionCreate, ProfessionalGroupCreate
 from repos.profession_n_group import ProfessionalGroupRepo, ProfessionRepo
-import logging, traceback
-from schemas.Resp import GenResponse
-from repos.bank import BankRepo
+import logging
+import traceback
+from repos.bank_n_ins_comp import BankRepo, InsuranceCompanyRepo
 from repos.user import UserRepo
+from utils.str import fmtPhoneNumber
 
 logger = logging.getLogger(__name__)
-
 router = APIRouter(
             prefix='/setup',
             tags=['Setup'],
@@ -76,7 +72,7 @@ async def create_department(req_data:DepartmentCreate, request:Request, token:st
 
 
 @router.get("/nationalities")
-def get_nationality_list(request:Request, token:str=Depends(auth_bearer)):
+def get_nationality_list():
     result = NationalityRepo.fetch_all()
 
     return {
@@ -87,7 +83,7 @@ def get_nationality_list(request:Request, token:str=Depends(auth_bearer)):
 
 
 @router.get("/titles")
-def get_title_list(request:Request, token:str=Depends(auth_bearer)):
+def get_title_list():
     result = TitleRepo.fetch_all()
     
     return {
@@ -131,7 +127,7 @@ def get_bank_list(request:Request, token:str=Depends(auth_bearer)):
 
 
 @router.get("/banks/{id}")
-def get_bank_list(id: str, request:Request, token:str=Depends(auth_bearer)):
+def get_bank_by_id(id: str, request:Request, token:str=Depends(auth_bearer)):
     result = BankRepo.fetch_by_id(id)
     print('1 Bank', result)
     
@@ -142,70 +138,27 @@ def get_bank_list(id: str, request:Request, token:str=Depends(auth_bearer)):
         }
 
 
-# @router.post("/titles")
-# async def create_title(req_data:TitleCreate, request:Request, token:str=Depends(auth_bearer)):
-#     result = await TitleRepo.create(req_data)
-#     res_data = result["data"] if result["data"] else None
-#     logger.warning(res_data)
+@router.get("/insurance-companies")
+def get_insurance_company_list(request:Request):
+    result = InsuranceCompanyRepo.fetch_all_min()
     
-#     msg = "Title created successfully!"
-#     code = HTTPStatus.CREATED
-#     if not res_data or not res_data['created_at']:
-#         msg = "Title could not be created."
-#         code = HTTPStatus.BAD_REQUEST
+    return {
+            "message": "Insurance companies retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
 
-#     if result["errors"]:
-#         res_data = result["errors"]
+
+@router.get("/insurance-companies/{id}")
+def get_insurance_company_by_id(id: str, request:Request, token:str=Depends(auth_bearer)):
+    result = InsuranceCompanyRepo.fetch_by_id(id)
+    print('1 Bank', result)
     
-#     return GenResponse(
-#                 message=msg,
-#                 status_code=code, 
-#                 data=result,
-#             )
-
-
-# @router.get("/agents")
-# def get_agent_list(request:Request, token:str=Depends(auth_bearer)):
-#     result = AgentRepo.fetch_all()
-    
-#     return {
-#             "message": "Agent(s) retrieved successfully!",
-#             "status_code": HTTPStatus.OK,
-#             'data': result,
-#         }
-
-
-# @router.get("/agents/min")
-# def get_agent_min_list(request:Request, token:str=Depends(auth_bearer)):
-#     result = AgentRepo.fetch_min()
-    
-#     return {
-#             "message": "Business Introducer(s) minimum retrieved successfully!",
-#             "status_code": HTTPStatus.OK,
-#             'data': result,
-#         }
-
-
-# @router.post("/agents")
-# async def create_agent(req_data:AgentCreate, request:Request, token:str=Depends(auth_bearer)):
-#     result = await AgentRepo.create(req_data)
-#     res_data = result["data"] if result["data"] else None
-#     logger.warning(res_data)
-    
-#     msg = "Agent created successfully!"
-#     code = HTTPStatus.CREATED
-#     if not res_data or not res_data['created_at']:
-#         msg = "Agent could not be created."
-#         code = HTTPStatus.BAD_REQUEST
-
-#     if result["errors"]:
-#         res_data = result["errors"]
-    
-#     return GenResponse(
-#                 message=msg,
-#                 status_code=code, 
-#                 data=result,
-#             )
+    return {
+            "message": f"Insurance company with {id} retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
 
 
 @router.get("/biz-introducers")
@@ -263,7 +216,7 @@ def validate_fields(vals: BizIntroducerCreate):
             # raise ValueError(f"Missing required fields for Individual account: {', '.join(missing_fields)}")
     return val_str
 
-from utils.str import fmtPhoneNumber, getNextMemberId
+
 @router.post("/biz-introducers")
 async def create_biz_introducer(req_d:BizIntroducerCreate, request:Request, token:str=Depends(auth_bearer)):
     user_id = auth_bearer.get_user_id(token)
@@ -299,199 +252,260 @@ async def create_biz_introducer(req_d:BizIntroducerCreate, request:Request, toke
             )
 
 
-# @router.delete("/biz-introducers/{id}")
-# async def delete_biz_introducer(id: str, token:str=Depends(auth_bearer)):
-#     result = await BizIntroducerRepo.delete(id)
+
+
+# @router.post("/prospects")
+# async def create_prospect(req_d:ProspectCreate, request:Request, token:str=Depends(auth_bearer)):
+#     userId = auth_bearer.get_user_id(token)
+#     req_d.created_by = str(userId)
+#     req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
+
+#     result = await ProspectRepo.create(req_d)
+#     res_data = result["data"] if result["data"] else None
+#     logger.warning(res_data)
+#     if res_data:
+#         pj = ProjectCreate
+#         pj.prospect_id = res_data["id"]
+#         pj.created_by = str(userId)
+#         pj.status = req_d.stage
+#         p_res = await ProjectRepo.create(pj)
+#         # logger.warning(p_res)
+
+#         psc = ProspectionStageCreate
+#         psc.created_by = str(userId)
+#         psc.project_id = p_res["data"]["id"]
+#         psc.prospect_id = res_data["id"]
+#         psc.stage = req_d.stage
+#         psc.notes = req_d.notes
+#         ps_rs = await ProspectionStageRepo.create(psc)
+#         logger.warning(ps_rs)
+    
+#     msg = "Prospect created successfully!"
+#     code = HTTPStatus.CREATED
+#     if not res_data or not res_data['created_at']:
+#         msg = "Prospect could not be created."
+#         code = HTTPStatus.BAD_REQUEST
+
+#     if result["errors"]:
+#         res_data = result["errors"]
+    
+#     return GenResponse(
+#                 message=msg, data=result, status_code=code, 
+#             )
+
+
+# @router.get("/projects/gen")
+# def get_project_list_general(token:str=Depends(auth_bearer)):
+#     result = ProjectRepo.fetch_all_gen()
+
+#     return GenResponse(
+#                 message="Project(s) retrieved successfully!", 
+#                 data=result, status_code=HTTPStatus.OK, 
+#             )
+
+# @router.get("/projects")
+# def get_project_list(token:str=Depends(auth_bearer)):
+#     result = ProjectRepo.fetch_all()
+
+#     return GenResponse(
+#                 message="Project(s) retrieved successfully!", 
+#                 data=result, status_code=HTTPStatus.OK, 
+#             )
+
+
+# @router.get("/projects/{id}")
+# def get_project_by_id(id:str, token:str=Depends(auth_bearer)):
+#     result = ProjectRepo.fetch_by_id(id)
+
+#     return GenResponse(
+#                 message="Project(s) retrieved by ID successfully!", 
+#                 data=result, status_code=HTTPStatus.OK, 
+#             )
+
+
+# @router.get("/prospects")
+# def get_prospect_list(token:str=Depends(auth_bearer)):
+#     result = ProspectRepo.fetch_all()
+
+#     return GenResponse(
+#                 message="Prospect(s) retrieved successfully!", 
+#                 data=result, status_code=HTTPStatus.OK, 
+#             )
+
+
+# @router.get("/prospects/{id}")
+# def get_prospect_by_id(id:str, token:str=Depends(auth_bearer)):
+#     result = ProspectRepo.fetch_by_id(id)
+    
+#     return GenResponse(
+#                 message="Prospect details retrieved successfully!", 
+#                 data=result, status_code=HTTPStatus.OK, 
+#             )
+
+
+# @router.post("/prospect-stages")
+# async def create_prospect_stage(req_d:ProspectionStageCreate, token:str=Depends(auth_bearer)):
+#     result = await ProspectionStageRepo.create(req_d)
+#     logger.warning(result)
+#     res_data = result["data"] if result["data"] else None
+#     logger.warning(res_data)
+#     # if res_data:
+#     msg = "Prospect stage created successfully!"
+#     code = HTTPStatus.CREATED
+#     if not res_data or not res_data['created_at']:
+#         msg = "Prospect stage could not be created."
+#         code = HTTPStatus.BAD_REQUEST
+
+#     if result["errors"]:
+#         res_data = result["errors"]
+    
+#     return GenResponse(
+#                 message=msg, data=result, status_code=code, 
+#             )
+
+# @router.get("/prospect-stages/{prospect_id}")
+# def get_prospect_stage_list(prospect_id:str, token:str=Depends(auth_bearer)):
+#     result = ProspectionStageRepo.fetch_by_prospect(prospect_id)
     
 #     return {
-#             "message": "Business Introducer deleted successfully!",
+#             "message": "Prospect stage(s) retrieved successfully!",
 #             "status_code": HTTPStatus.OK,
 #             'data': result,
 #         }
 
-from repos.prospect import ProspectRepo, ProspectStageRepo
-from schemas.Prospect import ProspectCreate, ProspectResult, ProspectStageCreate
-@router.post("/prospects")
-async def create_prospect(req_d:ProspectCreate, request:Request, token:str=Depends(auth_bearer)):
-    userId = auth_bearer.get_user_id(token)
-    req_d.created_by = str(userId)
-    req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
 
-    result = await ProspectRepo.create(req_d)
-    res_data = result["data"] if result["data"] else None
-    logger.warning(res_data)
-    if res_data:
-        psc = ProspectStageCreate
-        psc.prospect_id = res_data["id"]
-        psc.stage = req_d.stage
-        psc.notes = req_d.notes
-        # add prospect stage
-        ps_rs = await ProspectStageRepo.create(psc)
-        logger.warning(ps_rs)
+# @router.get("/policy-categories")
+# def get_policy_category_list():
+#     from repos.policy_category import PolicyCategoryRepo
+#     result = PolicyCategoryRepo.fetch_all()
+#     # result = PolicyCategory.all(["id", "name"]).serialize()
+
+#     return GenResponse(
+#                 message="Policy categories retrieved successfully!", 
+#                 data=result, status_code=HTTPStatus.OK, 
+#             )
+
+
+# @router.get("/policy-types")
+# def get_policy_type_list(token:str=Depends(auth_bearer)):
+#     from repos .policy_type import PolicyTypeRepo
+#     result = PolicyTypeRepo.fetch_all_min()
+#     # result = PolicyType.all(["id", "name", "commission"]).serialize()
+
+#     return GenResponse(
+#                 message="Policy type(s) retrieved successfully!", 
+#                 data=result, status_code=HTTPStatus.OK, 
+#             )
+
+
+# from repos.client import ClientRepo, ClientContactRepo
+# from schemas.Client import ClientCreate, ClientContactCreate
+# from utils.str import fmtPhoneNumber
+# @router.post("/clients")
+# async def create_client(req_d:ClientCreate, request:Request, token:str=Depends(auth_bearer)):
+#     userId = auth_bearer.get_user_id(token)
+#     req_d.created_by = str(userId)
+
+#     clientId = getNextMemberId()
+#     req_d.client_code = clientId
+#     req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
+
+#     result = await ClientRepo.create(req_d)
+#     res_data = result["data"] if result["data"] else None
+#     logger.warning(res_data)
     
-    msg = "Prospect created successfully!"
-    code = HTTPStatus.CREATED
-    if not res_data or not res_data['created_at']:
-        msg = "Prospect could not be created."
-        code = HTTPStatus.BAD_REQUEST
+#     msg = "Client created successfully!"
+#     code = HTTPStatus.CREATED
+#     if not res_data or not res_data['created_at']:
+#         msg = "Client could not be created."
+#         code = HTTPStatus.BAD_REQUEST
 
-    if result["errors"]:
-        res_data = result["errors"]
+#     if result["errors"]:
+#         res_data = result["errors"]
     
-    return GenResponse(
-                message=msg, data=result, status_code=code, 
-            )
+#     return GenResponse(
+#                 message=msg,
+#                 status_code=code, 
+#                 data=result,
+#             )
 
 
-@router.get("/prospects")
-def get_prospect_list(request:Request, token:str=Depends(auth_bearer)):
-    result = ProspectRepo.fetch_all()
+# @router.get("/clients")
+# def get_client_list(request:Request, token:str=Depends(auth_bearer)):
+#     result = ClientRepo.fetch_all()
     
-    return {
-            "message": "Prospects(s) retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
+#     return {
+#             "message": "Client(s) retrieved successfully!",
+#             "status_code": HTTPStatus.OK,
+#             'data': result,
+#         }
 
-@router.post("/prospect-stages")
-async def create_prospect_stage(req_d:ProspectStageCreate, token:str=Depends(auth_bearer)):
-    result = await ProspectStageRepo.create(req_d)
-    logger.warning(result)
-    res_data = result["data"] if result["data"] else None
-    logger.warning(res_data)
-    # if res_data:
-    msg = "Prospect stage created successfully!"
-    code = HTTPStatus.CREATED
-    if not res_data or not res_data['created_at']:
-        msg = "Prospect stage could not be created."
-        code = HTTPStatus.BAD_REQUEST
 
-    if result["errors"]:
-        res_data = result["errors"]
+# @router.get("/clients/{id}")
+# async def get_client(id: str, token:str=Depends(auth_bearer)):
+#     result = ClientRepo.fetch_by_id(id)
     
-    return GenResponse(
-                message=msg, data=result, status_code=code, 
-            )
+#     return {
+#             "message": "Client retrieved successfully!",
+#             "status_code": HTTPStatus.OK,
+#             'data': result,
+#         }
 
-@router.get("/prospect-stages/{prospect_id}")
-def get_prospect_stage_list(prospect_id:str, token:str=Depends(auth_bearer)):
-    result = ProspectStageRepo.fetch_by_prospect(prospect_id)
+
+# @router.post("/client-contacts")
+# async def create_client_contact(client_id: str,req_d:ClientContactCreate, request:Request, token:str=Depends(auth_bearer)):
+#     req_d.client_id = client_id
+#     req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
+
+#     client = ClientRepo.fetch_by_id(client_id)
+#     # logger.debug(client)
+#     # logger.debug(client['client_type'])
+#     if not client or client['client_type'] == 'Individual':
+#         return GenResponse(
+#                 message="The selected client is not of type Corporate",
+#                 status_code=HTTPStatus.OK, data=None,
+#             )
+
+#     result = await ClientContactRepo.create(req_d)
+#     res_data = result["data"] if result["data"] else None
+#     # logger.warning(res_data)
     
-    return {
-            "message": "Prospect stage(s) retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
+#     msg = "Client contact created successfully!"
+#     code = HTTPStatus.CREATED
+#     if not res_data or not res_data['created_at']:
+#         msg = "Client contact could not be created."
+#         code = HTTPStatus.BAD_REQUEST
 
-
-from repos.client import ClientRepo, ClientContactRepo
-from schemas.Client import ClientCreate, ClientContactCreate
-from utils.str import fmtPhoneNumber
-@router.post("/clients")
-async def create_client(req_d:ClientCreate, request:Request, token:str=Depends(auth_bearer)):
-    userId = auth_bearer.get_user_id(token)
-    req_d.created_by = str(userId)
-
-    clientId = getNextMemberId()
-    req_d.client_code = clientId
-    req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
-
-    result = await ClientRepo.create(req_d)
-    res_data = result["data"] if result["data"] else None
-    logger.warning(res_data)
+#     if result["errors"]:
+#         res_data = result["errors"]
     
-    msg = "Client created successfully!"
-    code = HTTPStatus.CREATED
-    if not res_data or not res_data['created_at']:
-        msg = "Client could not be created."
-        code = HTTPStatus.BAD_REQUEST
+#     return GenResponse(
+#                 message=msg,
+#                 status_code=code, 
+#                 data=result,
+#             )
 
-    if result["errors"]:
-        res_data = result["errors"]
+
+# @router.get("/client-contacts")
+# def get_client_contact_list(request:Request, token:str=Depends(auth_bearer)):
+#     result = ClientContactRepo.fetch_all()
+
+#     return GenResponse(
+#                 message="Client contact(s) retrieved successfully!",
+#                 status_code=HTTPStatus.OK, 
+#                 data=result,
+#             )
+
+
+# @router.get("/client-contacts/{client_id}")
+# async def get_client(client_id: str, token:str=Depends(auth_bearer)):
+#     result = ClientContactRepo.fetch_by_client_id(client_id)
     
-    return GenResponse(
-                message=msg,
-                status_code=code, 
-                data=result,
-            )
-
-
-@router.get("/clients")
-def get_client_list(request:Request, token:str=Depends(auth_bearer)):
-    result = ClientRepo.fetch_all()
-    
-    return {
-            "message": "Client(s) retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
-
-
-@router.get("/clients/{id}")
-async def get_client(id: str, token:str=Depends(auth_bearer)):
-    result = ClientRepo.fetch_by_id(id)
-    
-    return {
-            "message": "Client retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
-
-
-@router.post("/client-contacts")
-async def create_client_contact(client_id: str,req_d:ClientContactCreate, request:Request, token:str=Depends(auth_bearer)):
-    req_d.client_id = client_id
-    req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
-
-    client = ClientRepo.fetch_by_id(client_id)
-    # logger.debug(client)
-    # logger.debug(client['client_type'])
-    if not client or client['client_type'] == 'Individual':
-        return GenResponse(
-                message="The selected client is not of type Corporate",
-                status_code=HTTPStatus.OK, data=None,
-            )
-
-    result = await ClientContactRepo.create(req_d)
-    res_data = result["data"] if result["data"] else None
-    # logger.warning(res_data)
-    
-    msg = "Client contact created successfully!"
-    code = HTTPStatus.CREATED
-    if not res_data or not res_data['created_at']:
-        msg = "Client contact could not be created."
-        code = HTTPStatus.BAD_REQUEST
-
-    if result["errors"]:
-        res_data = result["errors"]
-    
-    return GenResponse(
-                message=msg,
-                status_code=code, 
-                data=result,
-            )
-
-
-@router.get("/client-contacts")
-def get_client_contact_list(request:Request, token:str=Depends(auth_bearer)):
-    result = ClientContactRepo.fetch_all()
-
-    return GenResponse(
-                message="Client contact(s) retrieved successfully!",
-                status_code=HTTPStatus.OK, 
-                data=result,
-            )
-
-
-@router.get("/client-contacts/{client_id}")
-async def get_client(client_id: str, token:str=Depends(auth_bearer)):
-    result = ClientContactRepo.fetch_by_client_id(client_id)
-    
-    return GenResponse(
-                message="Client contacts retrieved successfully!",
-                status_code=HTTPStatus.OK, 
-                data=result,
-            )
+#     return GenResponse(
+#                 message="Client contacts retrieved successfully!",
+#                 status_code=HTTPStatus.OK, 
+#                 data=result,
+#             )
 
 # from schemas.ProspectionStage import ProspStageCreate
 # from repos.pospection_stage import ProspectionStageRepo
@@ -575,15 +589,15 @@ async def get_client(client_id: str, token:str=Depends(auth_bearer)):
 #                 data=result,
 #             )
 
-@router.get("/clients/{id}")
-async def get_client(id: str, token:str=Depends(auth_bearer)):
-    result = ClientRepo.fetch_by_id(id)
+# @router.get("/clients/{id}")
+# async def get_client(id: str, token:str=Depends(auth_bearer)):
+#     result = ClientRepo.fetch_by_id(id)
     
-    return {
-            "message": "Client retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
+#     return {
+#             "message": "Client retrieved successfully!",
+#             "status_code": HTTPStatus.OK,
+#             'data': result,
+#         }
 
 
 @router.get("/prof-groups")
@@ -683,6 +697,3 @@ async def delete_profession(id: str, token:str=Depends(auth_bearer)):
             "status_code": HTTPStatus.OK,
             'data': result,
         }
-
-
-

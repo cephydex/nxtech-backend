@@ -19,7 +19,7 @@ class Prospect(Model):
         return Nationality
     
     # @has_many("prospect_id", "id")
-    @has_many("id", "prospect_id")
-    def stages(self):
-        from models.ProspectStage import ProspectStage
-        return ProspectStage
+    # @has_many("id", "prospect_id")
+    # def stages(self):
+    #     from models.ProspectStage import ProspectStage
+    #     return ProspectStage

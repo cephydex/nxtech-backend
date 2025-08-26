@@ -36,15 +36,30 @@ class ProspectResult(ProspectBase):
     model_config = ConfigDict(from_attributes=True)
 
 
-class ProspectStageBase(BaseModel):
-    prospect_id: str
+
+class ProspectionStageBase(BaseModel):
+    created_by: str
+    project_id: str
     stage: str
     notes: Optional[str] = None
 
-
-class ProspectStageCreate(ProspectStageBase):
+class ProspectionStageCreate(ProspectionStageBase):
     pass
 
+class ProspectionStageResult(ProspectionStageBase):
+    id:str
+    model_config = ConfigDict(from_attributes=True)
 
-class ProspectStageResult(ProspectStageBase):
-    pass
+
+# class ProspectStageBase(BaseModel):
+#     prospect_id: str
+#     stage: str
+#     notes: Optional[str] = None
+
+
+# class ProspectStageCreate(ProspectStageBase):
+#     pass
+
+
+# class ProspectStageResult(ProspectStageBase):
+    # pass

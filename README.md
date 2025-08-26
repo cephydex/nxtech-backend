@@ -46,4 +46,16 @@ masonite-orm seed:run user_roles
 
 masonite-orm model UserRole --directory=models
 
+# Initial Contact, Receipt of Document or Insurance Details, Quotation Sent, Client Reviewing, 
+# Negotiation, Awaiting Decision, Closed – Won, Closed – Lost
 
+# Initial Contact (indicate date)
+# Receipt of Document or Insurance Details (indicate date)
+# Quotation Sent (indicate date)
+# Client Reviewing (indicate date)
+# Negotiation (indicate date)
+# Awaiting Decision (indicate date)
+# Closed – Won (indicate date)
+# Closed – Lost (indicate date)
+
+<!-- "source", "Referral", "Cold Call", "Website Inquiry", "Walk-in", "Global Introduction" -->

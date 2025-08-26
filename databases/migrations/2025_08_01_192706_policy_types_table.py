@@ -9,13 +9,12 @@ class PolicyTypesTable(Migration):
         Run the migrations.
         """
         with self.schema.create("policy_types") as table:
-            table.increments("id")
+            table.uuid("id").primary()
             table.uuid("cat_id")
             table.foreign("cat_id").references("id").on("policy_categories")
             table.string("name")
             table.text("description").nullable()
             table.decimal("commission", 10, 2).nullable()
-
             table.timestamps()
 
     def down(self):

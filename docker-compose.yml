@@ -10,26 +10,13 @@ services:
       - '8010:80'
     volumes:
       - .:/app
+    networks:
+      - dev_host
 
-  nxtech-db:
-    container_name: nxtech-db
-    image: postgres:14-alpine
-    restart: always
-    env_file:
-      - ./config/postgres.env
-    ports:
-      - "8012:5432"
 
-  nxtech-pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: nxtech-pgadmin
-    restart: unless-stopped
-    ports:
-      - "8013:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@mail.com
-      PGADMIN_DEFAULT_PASSWORD: admin@password
-    depends_on:
-      - nxtech-db
-    logging:
-      driver: none
+networks:
+  dev_host:
+    driver: bridge
+    external: true
+
+
