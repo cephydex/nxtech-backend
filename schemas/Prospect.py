@@ -27,6 +27,9 @@ class ProspectBase(IndividualProspBase):
     active_status: Optional[str] = 'active'
 
 
+class ProspectCreateWProduct(ProspectBase):
+    policy_type_id: Optional[str] = None
+
 class ProspectCreate(ProspectBase):
     pass
 
@@ -51,15 +54,18 @@ class ProspectionStageResult(ProspectionStageBase):
     model_config = ConfigDict(from_attributes=True)
 
 
-# class ProspectStageBase(BaseModel):
-#     prospect_id: str
-#     stage: str
-#     notes: Optional[str] = None
+class ProspectContactBase(BaseModel):
+    prospect_id: Optional[str] = None
+    full_name: Optional[str] = None
+    email: Optional[str] = None
+    contact_no: Optional[str] = None
+    role: Optional[str] = None
+    created_at: Optional[str] = None
+
+class ProspectContactCreate(ProspectContactBase):
+    pass
 
 
-# class ProspectStageCreate(ProspectStageBase):
-#     pass
-
-
-# class ProspectStageResult(ProspectStageBase):
-    # pass
+class ProspectContactResult(ProspectContactBase):
+    id:str
+    model_config = ConfigDict(from_attributes=True)

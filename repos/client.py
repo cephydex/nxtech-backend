@@ -103,70 +103,59 @@ class ClientRepo:
         return result
 
 
-class ClientContactRepo:
+# class ClientContactRepo:
     
-    q_builder = QueryBuilder(model=None).table("client_contacts")
+#     q_builder = QueryBuilder(model=None).table("client_contacts")
         
-    async def create(e: ClientContactCreate):
-        res = {'errors': {}, 'data': None,}
+#     async def create(e: ClientContactCreate):
+#         res = {'errors': {}, 'data': None,}
 
-        try:
-            db_item = ClientContact()
-            db_item.id=str(uuid.uuid4()),
-            db_item.client_id=e.client_id,
-            db_item.full_name=e.full_name,
-            db_item.contact_no=e.contact_no,
-            db_item.email=e.email,
-            db_item.role=e.role,
-            db_item.save()
-            res['data'] = db_item.serialize()
+#         try:
+#             db_item = ClientContact()
+#             db_item.id=str(uuid.uuid4()),
+#             db_item.client_id=e.client_id,
+#             db_item.full_name=e.full_name,
+#             db_item.contact_no=e.contact_no,
+#             db_item.email=e.email,
+#             db_item.role=e.role,
+#             db_item.save()
+#             res['data'] = db_item.serialize()
 
-        except Exception as ex:
-            if 'unique constraint' in str(ex):
-                logger.error("Client contact %s already exists" % e.client_id+" | "+e.full_name+" | ("+e.contact_no+", "+e.role+")")
-                res['errors']["unique_constraint"] = str(ex)
-            logger.error(str(ex))
+#         except Exception as ex:
+#             if 'unique constraint' in str(ex):
+#                 logger.error("Client contact %s already exists" % e.client_id+" | "+e.full_name+" | ("+e.contact_no+", "+e.role+")")
+#                 res['errors']["unique_constraint"] = str(ex)
+#             logger.error(str(ex))
 
-        return res
+#         return res
     
-        # client_type, company_name, address_loc, email, contact_no, is_existing, client_code, company_reg_no, year_of_inc, 
-        # uploaded_doc, tin_no, active_status, notes, 
-        # account_manager, claims_manager, created_by,
-        # title_id, first_name, last_name, other_names, dob, sex, nationality_id, id_type, id_number, pep, 
-        # residential_addr, postal_addr, professional_group_id, profession_id,
+#         # client_type, company_name, address_loc, email, contact_no, is_existing, client_code, company_reg_no, year_of_inc, 
+#         # uploaded_doc, tin_no, active_status, notes, 
+#         # account_manager, claims_manager, created_by,
+#         # title_id, first_name, last_name, other_names, dob, sex, nationality_id, id_type, id_number, pep, 
+#         # residential_addr, postal_addr, professional_group_id, profession_id,
 
 
-    async def delete(id: str):
-        result = ClientContact.find(id).delete()
+#     async def delete(id: str):
+#         result = ClientContact.find(id).delete()
 
-        return result
+#         return result
 
 
-    def fetch_all() -> List[ClientContactResult]:
-        result =  ClientContact.with_('client').all()
+#     def fetch_all() -> List[ClientContactResult]:
+#         result =  ClientContact.with_('client').all()
         
-        return result.serialize()
+#         return result.serialize()
 
 
-    def fetch_by_id(id: str) -> List[ClientContactResult]:
-        result =  ClientContact.with_('client').find(id)
+#     def fetch_by_id(id: str) -> List[ClientContactResult]:
+#         result =  ClientContact.with_('client').find(id)
 
-        return result.serialize()
+#         return result.serialize()
 
 
-    def fetch_by_client_id(client_id: str) -> List[ClientContactResult]:
-        result =  ClientContact.where('client_id', client_id).get()
+#     def fetch_by_client_id(client_id: str) -> List[ClientContactResult]:
+#         result =  ClientContact.where('client_id', client_id).get()
 
-        return result.serialize()
-    
-    
-    # def fetch_min() -> List[ClientResult]:
-    #     result = AgentRepo.q_builder\
-    #         .left_join('titles', 'titles.id', '=', 'agents.title_id')\
-    #         .select(
-    #             'id', 'titles.name as title', #'email'
-    #         )\
-    #         .select_raw("first_name ||' '||last_name AS name").get()
-        
-    #     return result.serialize()
+#         return result.serialize()
 

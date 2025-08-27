@@ -50,6 +50,17 @@ class PolicyTypeRepo:
         return result.serialize()
 
 
+    def fetch_all_with_product() -> List[PolicyTypeResult]:
+        result =  PolicyTypeRepo.q_builder\
+            .left_join('policy_categories', 'policy_categories.id', '=', 'policy_types.cat_id')\
+            .select(
+                'id', 'policy_categories.name as category_name', 'policy_types.name', 'policy_types.commission'
+            ).all()
+        # result =  PolicyType.all(["id", "name", "commission"])
+        
+        return result.serialize()
+
+
     def fetch_by_id(id: str) -> List[PolicyTypeResult]:
         tmp_result =  PolicyType\
                         .with_('policy_category')\

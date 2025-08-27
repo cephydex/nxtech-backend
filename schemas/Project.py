@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from typing import Optional
+from typing import Optional, List
 # from decimal import Decimal
 
 
@@ -8,6 +8,16 @@ class ProjectBase(BaseModel):
     policy_type_id: Optional[str] = None
     status: Optional[str] = None
     created_by: str
+
+class ProjectMin(BaseModel):
+    policy_type_id: Optional[str] = None
+    status: Optional[str] = None
+    stage: str
+
+class ProjectCreateMany(BaseModel):
+    prospect_id: str
+    created_by: Optional[str] = None
+    projects: List[ProjectMin]
 
 
 class ProjectCreate(ProjectBase):

@@ -58,3 +58,37 @@ class QuoteRepo:
                             .find(id)
         result = tmp_result.serialize() if tmp_result else None
         return result
+
+
+from models.QuoteExtra import QuoteExtra
+from schemas.QuoteExtra import QuoteExtraRequest
+class QuoteExtraRepo:
+    
+    async def create(e: QuoteExtraRequest):
+        res = {'errors': {}, 'data': None,}
+        q_data = []
+        try:
+            for item in e.extras:
+                q_data.append({
+                    "id": str(uuid.uuid4()),
+                    "quote_id": e.quote_id,
+                    "type": item.type,
+                    "description": item.description,
+                })
+
+            db_res = QuoteExtra.bulk_create(q_data)
+            res['data'] = db_res.serialize()
+
+        except Exception as ex:
+            if 'unique constraint' in str(ex):
+                logger.error(f"Quote extra {e.type} | ({e.description}) already exists")
+                res['errors']["unique_constraint"] = str(ex)
+            logger.error(str(ex))
+
+        return res
+
+    def fetch_all() -> List[QuoteResult]:
+        result =  QuoteExtra.all()
+        # result =  Quote.with_('title').with_('stages').all()
+        
+        return result.serialize()

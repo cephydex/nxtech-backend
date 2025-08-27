@@ -9,10 +9,10 @@ class PolicyTypeBase(BaseModel):
     commission: Optional[float] = 0.00
 
 
-class QuoteCreate(PolicyTypeBase):
+class PolicyTypeCreate(PolicyTypeBase):
     pass
 
 
-class QuoteResult(PolicyTypeBase):
+class PolicyTypeResult(PolicyTypeBase):
     id:str
     model_config = ConfigDict(from_attributes=True)

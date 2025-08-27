@@ -5,6 +5,8 @@ from schemas.Prospect import ProspectCreate, ProspectResult
 from models.Prospect import Prospect
 from schemas.Prospect import ProspectionStageCreate
 from models.ProspectionStage import ProspectionStage
+from schemas.Prospect import ProspectContactCreate
+from models.ProspectContact import ProspectContact
 from masoniteorm.query import QueryBuilder
 
 logger = logging.getLogger(__name__)
@@ -68,12 +70,9 @@ class ProspectRepo:
     def fetch_by_id(id: str) -> List[ProspectResult]:
         tmp_result =  Prospect.with_('title')\
                                 .with_('nationality')\
-                                .with_('stages')\
                                     .find(id)
         result = tmp_result.serialize() if tmp_result else None
         return result
-
-
 
 
 class ProspectionStageRepo:
@@ -125,40 +124,64 @@ class ProspectionStageRepo:
         return result.serialize()
 
 
+    def fetch_by_project(project_id: str) -> List:
+        result =  ProspectionStage.where('project_id', project_id).get()
+
+        return result.serialize()
+
+
     def fetch_by_user_id(user_id: str) -> List:
         result =  ProspectionStage.where('user_id', user_id).get()
 
         return result.serialize()
     
 
-
-
-# from schemas.Prospect import ProspectStageCreate, ProspectResult
-# from models.ProspectStage import ProspectStage
-# class ProspectStageRepo:
-#     q_builder = QueryBuilder(model=None).table("clients")
-        
-#     async def create(e: ProspectStageCreate):
-#         res = {'errors': {}, 'data': None,}
-        
-#         try:
-#             db_item = ProspectStage()
-#             db_item.prospect_id=e.prospect_id,
-#             db_item.stage=e.stage,
-#             db_item.notes=e.notes,
-#             db_item.save()
-#             res['data'] = db_item.serialize()
-
-#         except Exception as ex:
-#             if 'unique constraint' in str(ex):
-#                 logger.error("Prospect stage %s already exists" % e.client_code+" | "+e.client_type+" | ("+e.first_name+", "+e.last_name+")")
-#                 res['errors']["unique_constraint"] = str(ex)
-#             logger.error(str(ex))
-
-#         return res
+class ProspectContactRepo:
     
-
-#     def fetch_by_prospect(prospect_id:str) -> List[ProspectResult]:
-#         result =  ProspectStage.where('prospect_id', prospect_id).all()
+    q_builder = QueryBuilder(model=None).table("prospect_contacts")
         
-#         return result.serialize()
+    async def create(e: ProspectContactCreate):
+        res = {'errors': {}, 'data': None,}
+
+        try:
+            db_item = ProspectContact()
+            db_item.id=str(uuid.uuid4()),
+            db_item.prospect_id=e.prospect_id,
+            db_item.full_name=e.full_name,
+            db_item.contact_no=e.contact_no,
+            db_item.email=e.email,
+            db_item.role=e.role,
+            db_item.save()
+            res['data'] = db_item.serialize()
+
+        except Exception as ex:
+            if 'unique constraint' in str(ex):
+                logger.error(f"Prospect contact {e.prospect_id} | {e.full_name} | ({e.contact_no}, {e.role}) already exists")
+                res['errors']["unique_constraint"] = str(ex)
+            logger.error(str(ex))
+
+        return res
+
+
+    async def delete(id: str):
+        result = ProspectContact.find(id).delete()
+
+        return result
+
+
+    def fetch_all() -> List:
+        result =  ProspectContact.with_('prospect').all()
+        
+        return result.serialize()
+
+
+    # def fetch_by_id(id: str) -> List:
+    #     result =  ProspectContact.with_('prospect').find(id)
+
+    #     return result.serialize()
+
+
+    def fetch_by_prospect_id(prospect_id: str) -> List:
+        result =  ProspectContact.where('prospect_id', prospect_id).get()
+
+        return result.serialize()

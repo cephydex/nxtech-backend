@@ -160,6 +160,29 @@ def get_insurance_company_by_id(id: str, request:Request, token:str=Depends(auth
             'data': result,
         }
 
+from repos.policy_type import PolicyTypeRepo
+from repos.policy_category import PolicyCategoryRepo
+@router.get("/insurance-categories")
+def get_policy_category_list(request:Request):
+    result = PolicyCategoryRepo.fetch_all_min()
+    
+    return {
+            "message": "Insurance policy categories retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
+
+
+@router.get("/insurance-products")
+def get_insurance_product_list(request:Request):
+    result = PolicyTypeRepo.fetch_all_with_product()
+    
+    return {
+            "message": "Insurance companies retrieved successfully!",
+            "status_code": HTTPStatus.OK,
+            'data': result,
+        }
+
 
 @router.get("/biz-introducers")
 def get_biz_introducer_list(request:Request, token:str=Depends(auth_bearer)):
