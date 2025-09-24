@@ -41,9 +41,9 @@ class ProspectResult(ProspectBase):
 
 
 class ProspectionStageBase(BaseModel):
-    created_by: str
     project_id: str
     stage: str
+    created_by: Optional[str] = None
     notes: Optional[str] = None
 
 class ProspectionStageCreate(ProspectionStageBase):

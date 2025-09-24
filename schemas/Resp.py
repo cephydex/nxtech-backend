@@ -19,6 +19,7 @@ class GenResponse(BaseModel):
 
     message:str
     data:Optional[dict | list] = []
+    # data:Optional[dict | list] = []
     status_code:int
 
 

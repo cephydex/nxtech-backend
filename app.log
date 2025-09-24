@@ -289,3 +289,155 @@ WARNING | 2025-08-27 20:01:54,276 | routes.func_router | create_prospect() | L35
 WARNING | 2025-08-27 20:01:54,349 | routes.func_router | create_prospect() | L51 | {'errors': {}, 'data': {'project_id': '799a918a-592e-4a17-bffe-15e472eff4e8', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Initial Contact', 'notes': 'Initial Contact', 'created_at': '2025-08-27T20:01:54+00:00', 'updated_at': '2025-08-27T20:01:54+00:00'}}
 WARNING | 2025-08-27 20:13:26,631 | routes.func_router | create_prospect() | L35 | {'id': 'bd7db672-8ecb-4713-9a88-e3dfcb65e4f9', 'title_id': None, 'first_name': None, 'last_name': None, 'other_names': None, 'email': 'info@harvestblue.com', 'contact_no': '2333027182911', 'sex': 'F', 'address_loc': 'Adabraka', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Corporate', 'company_name': 'Harvest Blue Limited', 'year_of_inc': 2016, 'source': 'Cold Call', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-27T20:13:26+00:00', 'updated_at': '2025-08-27T20:13:26+00:00'}
 WARNING | 2025-08-27 20:13:26,691 | routes.func_router | create_prospect() | L51 | {'errors': {}, 'data': {'project_id': 'f2b1aa69-3d74-4d4a-9d23-16414d35b67f', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Initial Contact', 'notes': 'Initial Contact', 'created_at': '2025-08-27T20:13:26+00:00', 'updated_at': '2025-08-27T20:13:26+00:00'}}
+WARNING | 2025-08-28 01:31:32,191 | routes.func_router | create_quote() | L222 | {'errors': {}, 'data': {'id': 'e6e867cb-a416-478b-a71d-2a60cb0347ce', 'project_id': 'f2b1aa69-3d74-4d4a-9d23-16414d35b67f', 'prospect_id': 'bd7db672-8ecb-4713-9a88-e3dfcb65e4f9', 'policy_type_id': '00000000-0000-3000-8000-a10000000000', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000002', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 8, 4), 'document_url': '', 'entry_data': {'sum_insured': '200', 'policy_cover': '00000000-0000-5000-8000-a10000000001', 'chassis_number': '90909', 'colour_of vehicle': 'Red', 'registration_number': '6565', 'year_of manufacture': '2001', 'make_and model of vehicle': 'Makes', 'business_description or trade': 'Trade'}, 'created_by': '20000000-0000-4001-0000-010000000000', 'status': '', 'created_at': '2025-08-28T01:31:32+00:00', 'updated_at': '2025-08-28T01:31:32+00:00'}}
+WARNING | 2025-08-28 01:31:32,193 | routes.func_router | create_quote() | L224 | {'id': 'e6e867cb-a416-478b-a71d-2a60cb0347ce', 'project_id': 'f2b1aa69-3d74-4d4a-9d23-16414d35b67f', 'prospect_id': 'bd7db672-8ecb-4713-9a88-e3dfcb65e4f9', 'policy_type_id': '00000000-0000-3000-8000-a10000000000', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000002', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 8, 4), 'document_url': '', 'entry_data': {'sum_insured': '200', 'policy_cover': '00000000-0000-5000-8000-a10000000001', 'chassis_number': '90909', 'colour_of vehicle': 'Red', 'registration_number': '6565', 'year_of manufacture': '2001', 'make_and model of vehicle': 'Makes', 'business_description or trade': 'Trade'}, 'created_by': '20000000-0000-4001-0000-010000000000', 'status': '', 'created_at': '2025-08-28T01:31:32+00:00', 'updated_at': '2025-08-28T01:31:32+00:00'}
+ERROR | 2025-08-28 02:06:05,668 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:06:14.640Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:06:05,669 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:06:05,670 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:06:08,019 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:06:17.662Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:06:08,020 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:06:08,021 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:06:11,698 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:06:21.027Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:06:11,699 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:06:11,700 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:06:13,584 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:06:23.188Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:06:13,585 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:06:13,586 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:06:24,410 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:06:33.711Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:06:24,411 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:06:24,412 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:06:40,322 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:06:49.648Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:06:40,323 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:06:40,324 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:06:51,617 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:07:00.887Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:06:51,619 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:06:51,620 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:07:36,951 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:07:45.767Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:07:36,951 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:07:36,952 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:08:54,678 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:09:03.454Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:08:54,679 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:08:54,679 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 02:09:31,333 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: "2025-08-28T02:09:40.627Z"
+LINE 1: ...VALUES (('f2b1aa69-3d74-4d4a-9d23-16414d35b67f'),('2025-08-2...
+                                                             ^
+
+WARNING | 2025-08-28 02:09:31,334 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:09:31,335 | routes.func_router | create_prospect_stage() | L164 | None
+WARNING | 2025-08-28 02:27:31,348 | routes.func_router | create_prospect() | L35 | {'id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'title_id': '00000000-0000-4000-8000-a10000000000', 'first_name': 'Reuben', 'last_name': 'Trinidad', 'other_names': None, 'email': 'reub@mail.com', 'contact_no': '233277229850', 'sex': 'M', 'address_loc': 'Accra', 'nationality_id': '60000000-0000-0000-0000-010000000084', 'client_type': 'Individual', 'company_name': None, 'year_of_inc': None, 'source': 'Cold Call', 'active_status': 'active', 'created_by': '20000000-0000-4001-0000-010000000000', 'created_at': '2025-08-28T02:27:31+00:00', 'updated_at': '2025-08-28T02:27:31+00:00'}
+WARNING | 2025-08-28 02:27:31,398 | routes.func_router | create_prospect() | L51 | {'errors': {}, 'data': {'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Initial Contact', 'notes': '', 'created_at': '2025-08-28T02:27:31+00:00', 'updated_at': '2025-08-28T02:27:31+00:00'}}
+ERROR | 2025-08-28 02:29:15,688 | repos.prospect  | create() | L98 | invalid input syntax for type uuid: ""
+LINE 1: ...VALUES (('f94a8e58-80c6-4f9d-9fef-c52c0367bbfd'),(''),('Rece...
+                                                             ^
+
+WARNING | 2025-08-28 02:29:15,689 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 02:29:15,690 | routes.func_router | create_prospect_stage() | L164 | None
+ERROR | 2025-08-28 11:11:20,893 | repos.prospect  | create() | L98 | null value in column "created_by" of relation "project_stages" violates not-null constraint
+DETAIL:  Failing row contains (null, 799a918a-592e-4a17-bffe-15e472eff4e8, Test stage, null, 2025-08-28 11:11:20+00, 2025-08-28 11:11:20+00).
+
+WARNING | 2025-08-28 11:11:20,895 | routes.func_router | create_prospect_stage() | L162 | {'errors': {}, 'data': None}
+WARNING | 2025-08-28 11:11:20,897 | routes.func_router | create_prospect_stage() | L164 | None
+WARNING | 2025-08-28 11:12:21,854 | routes.func_router | create_prospect_stage() | L163 | {'errors': {}, 'data': {'project_id': '799a918a-592e-4a17-bffe-15e472eff4e8', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Test stage', 'notes': None, 'created_at': '2025-08-28T11:12:21+00:00', 'updated_at': '2025-08-28T11:12:21+00:00'}}
+WARNING | 2025-08-28 11:12:21,855 | routes.func_router | create_prospect_stage() | L165 | {'project_id': '799a918a-592e-4a17-bffe-15e472eff4e8', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Test stage', 'notes': None, 'created_at': '2025-08-28T11:12:21+00:00', 'updated_at': '2025-08-28T11:12:21+00:00'}
+WARNING | 2025-08-28 14:15:15,093 | routes.func_router | create_prospect_stage() | L163 | {'errors': {}, 'data': {'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Receipt of Insurance Document', 'notes': 'waiting', 'created_at': '2025-08-28T14:15:15+00:00', 'updated_at': '2025-08-28T14:15:15+00:00'}}
+WARNING | 2025-08-28 14:15:15,096 | routes.func_router | create_prospect_stage() | L165 | {'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Receipt of Insurance Document', 'notes': 'waiting', 'created_at': '2025-08-28T14:15:15+00:00', 'updated_at': '2025-08-28T14:15:15+00:00'}
+WARNING | 2025-08-28 14:16:33,083 | routes.func_router | create_prospect_stage() | L163 | {'errors': {}, 'data': {'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Quotation Sent', 'notes': 'sent quote', 'created_at': '2025-08-28T14:16:33+00:00', 'updated_at': '2025-08-28T14:16:33+00:00'}}
+WARNING | 2025-08-28 14:16:33,084 | routes.func_router | create_prospect_stage() | L165 | {'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'created_by': '20000000-0000-4001-0000-010000000000', 'stage': 'Quotation Sent', 'notes': 'sent quote', 'created_at': '2025-08-28T14:16:33+00:00', 'updated_at': '2025-08-28T14:16:33+00:00'}
+WARNING | 2025-08-29 14:57:36,464 | routes.func_router | create_multiple_projects() | L73 | MULTI RES
+WARNING | 2025-08-29 16:37:04,663 | routes.func_router | create_multiple_projects() | L73 | MULTI RES
+ERROR | 2025-09-04 17:01:23,579 | repos.quote     | create() | L40 | invalid input syntax for type uuid: ""
+LINE 1: ...1af78'),('00000000-0000-3000-8000-a10000000001'),(''),(0),('...
+                                                             ^
+
+WARNING | 2025-09-04 17:01:23,582 | routes.func_router | create_quote() | L220 | {'errors': {}, 'data': None}
+WARNING | 2025-09-04 17:01:23,583 | routes.func_router | create_quote() | L222 | None
+ERROR | 2025-09-05 13:18:49,285 | repos.quote     | create() | L88 | can't adapt type 'dict'
+ERROR | 2025-09-05 13:24:58,093 | repos.quote     | create() | L88 | can't adapt type 'dict'
+ERROR | 2025-09-05 14:02:15,216 | repos.quote     | create() | L86 | Quote extras 7a84dfec-4b53-4cd5-8630-6099b38e35c7 | ({"deductibles": [{"Motor vehicle": "10%"}], "exclusions": "We are excluding all possible", "special_condition": "Some of the items referenced are quite old"}) already exists
+ERROR | 2025-09-05 14:02:15,218 | repos.quote     | create() | L88 | duplicate key value violates unique constraint "quote_extras_quote_id_insurance_company_id_primary"
+DETAIL:  Key (quote_id, insurance_company_id)=(7a84dfec-4b53-4cd5-8630-6099b38e35c7, c000000c-fc36-4000-a000-000000000002) already exists.
+
+ERROR | 2025-09-09 11:19:24,428 | repos.quote     | create_multiple() | L111 | 'list' object has no attribute 'extras'
+ERROR | 2025-09-09 11:25:31,609 | repos.quote     | create_multiple() | L112 | 'list' object has no attribute 'model_dump'
+ERROR | 2025-09-09 11:42:52,518 | repos.quote     | create_multiple() | L113 | can't adapt type 'dict'
+ERROR | 2025-09-09 12:27:39,632 | repos.quote     | update_selected_extras() | L133 | class model 'QuoteExtra' has no attribute serialze
+ERROR | 2025-09-09 14:12:34,947 | repos.quote     | create() | L41 | invalid input syntax for type uuid: ""
+LINE 1: ...VALUES (('1e7b2b1d-a640-45c3-b43c-011eae9568da'),(''),(''),(...
+                                                             ^
+
+WARNING | 2025-09-09 14:12:34,949 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': None}
+WARNING | 2025-09-09 14:12:34,950 | routes.func_router | create_quote() | L232 | None
+ERROR | 2025-09-09 14:14:30,942 | repos.quote     | create() | L41 | invalid input syntax for type uuid: ""
+LINE 1: ...VALUES (('455fbd5c-45aa-41be-9542-ad6c8a5c35a2'),(''),(''),(...
+                                                             ^
+
+WARNING | 2025-09-09 14:14:30,942 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': None}
+WARNING | 2025-09-09 14:14:30,943 | routes.func_router | create_quote() | L232 | None
+ERROR | 2025-09-09 14:14:42,125 | repos.quote     | create() | L41 | invalid input syntax for type uuid: ""
+LINE 1: ...VALUES (('43082a56-5046-4b83-8a57-e570c4e48ffe'),(''),(''),(...
+                                                             ^
+
+WARNING | 2025-09-09 14:14:42,125 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': None}
+WARNING | 2025-09-09 14:14:42,126 | routes.func_router | create_quote() | L232 | None
+ERROR | 2025-09-09 14:18:26,291 | repos.quote     | create() | L41 | invalid input syntax for type uuid: ""
+LINE 1: ...VALUES (('2c322ed9-1e2e-48a2-b23c-ab0267581c9d'),(''),(''),(...
+                                                             ^
+
+WARNING | 2025-09-09 14:18:26,293 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': None}
+WARNING | 2025-09-09 14:18:26,293 | routes.func_router | create_quote() | L232 | None
+WARNING | 2025-09-09 14:24:34,529 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': {'id': 'd10e2dfe-d413-476b-b86b-d72c9ea78917', 'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000002', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000001', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 3), 'document_url': '', 'entry_data': {'option_type': 'Liability', 'sum_insured': '200', 'policy_cover': '00000000-0000-5000-8000-a10000000014', 'discovery_period': 'meat', 'locations_covered': 'goat', 'business_description_or_trade': 'fish', 'coverage_type_(claims_made_or_claims_occurring)': 'cow'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-09T14:24:34+00:00', 'updated_at': '2025-09-09T14:24:34+00:00'}}
+WARNING | 2025-09-09 14:24:34,530 | routes.func_router | create_quote() | L232 | {'id': 'd10e2dfe-d413-476b-b86b-d72c9ea78917', 'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000002', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000001', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 3), 'document_url': '', 'entry_data': {'option_type': 'Liability', 'sum_insured': '200', 'policy_cover': '00000000-0000-5000-8000-a10000000014', 'discovery_period': 'meat', 'locations_covered': 'goat', 'business_description_or_trade': 'fish', 'coverage_type_(claims_made_or_claims_occurring)': 'cow'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-09T14:24:34+00:00', 'updated_at': '2025-09-09T14:24:34+00:00'}
+WARNING | 2025-09-09 14:29:47,580 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': {'id': '65647e0b-4b14-463e-99ac-ffee8ce2ce2d', 'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000002', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000001', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 4), 'document_url': '', 'entry_data': {'option_type': 'Liability', 'sum_insured': '200', 'policy_cover': '00000000-0000-5000-8000-a10000000014', 'discovery_period': 'meat', 'locations_covered': 'goat', 'business_description_or_trade': 'fish', 'coverage_type_(claims_made_or_claims_occurring)': 'cow'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-09T14:29:47+00:00', 'updated_at': '2025-09-09T14:29:47+00:00'}}
+WARNING | 2025-09-09 14:29:47,581 | routes.func_router | create_quote() | L232 | {'id': '65647e0b-4b14-463e-99ac-ffee8ce2ce2d', 'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000002', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000001', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 4), 'document_url': '', 'entry_data': {'option_type': 'Liability', 'sum_insured': '200', 'policy_cover': '00000000-0000-5000-8000-a10000000014', 'discovery_period': 'meat', 'locations_covered': 'goat', 'business_description_or_trade': 'fish', 'coverage_type_(claims_made_or_claims_occurring)': 'cow'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-09T14:29:47+00:00', 'updated_at': '2025-09-09T14:29:47+00:00'}
+WARNING | 2025-09-09 16:07:30,182 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': {'id': '5e1abf7a-93d0-4e6c-9482-c07b972adaef', 'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000009', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000002', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 5), 'document_url': '', 'entry_data': {'option_type': '', 'policy_cover': '00000000-0000-5000-8000-a10000000054', 'business_description_or_trade': 'new business'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-09T16:07:30+00:00', 'updated_at': '2025-09-09T16:07:30+00:00'}}
+WARNING | 2025-09-09 16:07:30,185 | routes.func_router | create_quote() | L232 | {'id': '5e1abf7a-93d0-4e6c-9482-c07b972adaef', 'project_id': 'f94a8e58-80c6-4f9d-9fef-c52c0367bbfd', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000009', 'insurance_company_id': 'c000000c-fc36-4000-a000-000000000002', 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 5), 'document_url': '', 'entry_data': {'option_type': '', 'policy_cover': '00000000-0000-5000-8000-a10000000054', 'business_description_or_trade': 'new business'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-09T16:07:30+00:00', 'updated_at': '2025-09-09T16:07:30+00:00'}
+WARNING | 2025-09-09 16:48:31,499 | routes.func_router | create_multiple_projects() | L76 | MULTI RES
+WARNING | 2025-09-09 16:50:20,889 | routes.func_router | create_multiple_projects() | L76 | MULTI RES
+ERROR | 2025-09-10 13:56:25,897 | repos.quote     | create() | L41 | invalid input syntax for type uuid: ""
+LINE 1: ...1af78'),('00000000-0000-3000-8000-a10000000009'),(''),(0),('...
+                                                             ^
+
+WARNING | 2025-09-10 13:56:25,903 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': None}
+WARNING | 2025-09-10 13:56:25,904 | routes.func_router | create_quote() | L232 | None
+ERROR | 2025-09-10 13:56:27,645 | repos.quote     | create_multiple() | L115 | invalid input syntax for type uuid: "undefined"
+LINE 1: ..."}', 'c000000c-fc36-4000-a000-000000000003', 500, 'undefined...
+                                                             ^
+
+WARNING | 2025-09-10 14:02:55,888 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': {'id': '125b2b83-c5f2-40bb-8cfe-20fce086b6ac', 'project_id': '70c2da2c-dc94-4a1b-839e-d0165b4ec759', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000009', 'insurance_company_id': None, 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 5), 'document_url': '', 'entry_data': {'option_type': '', 'policy_cover': '00000000-0000-5000-8000-a10000000054', 'personel_covered_(clericals)': '34', 'business_description_or_trade': 'new business', 'personel_covered_(casual_staff)': '435', 'personel_covered_(non_clericals)': '434', 'personel_covered_(permanent_staff)': '23', 'number_of_personel_covered_per_category': '23'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-10T14:02:55+00:00', 'updated_at': '2025-09-10T14:02:55+00:00'}}
+WARNING | 2025-09-10 14:02:55,889 | routes.func_router | create_quote() | L232 | {'id': '125b2b83-c5f2-40bb-8cfe-20fce086b6ac', 'project_id': '70c2da2c-dc94-4a1b-839e-d0165b4ec759', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000009', 'insurance_company_id': None, 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 5), 'document_url': '', 'entry_data': {'option_type': '', 'policy_cover': '00000000-0000-5000-8000-a10000000054', 'personel_covered_(clericals)': '34', 'business_description_or_trade': 'new business', 'personel_covered_(casual_staff)': '435', 'personel_covered_(non_clericals)': '434', 'personel_covered_(permanent_staff)': '23', 'number_of_personel_covered_per_category': '23'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-10T14:02:55+00:00', 'updated_at': '2025-09-10T14:02:55+00:00'}
+WARNING | 2025-09-10 14:03:20,790 | routes.func_router | create_quote() | L230 | {'errors': {}, 'data': {'id': 'cb2b192c-39ff-41b8-8cc4-1703be4b781f', 'project_id': '70c2da2c-dc94-4a1b-839e-d0165b4ec759', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000009', 'insurance_company_id': None, 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 5), 'document_url': '', 'entry_data': {'option_type': '', 'policy_cover': '00000000-0000-5000-8000-a10000000054', 'personel_covered_(clericals)': '34', 'business_description_or_trade': 'new business', 'personel_covered_(casual_staff)': '435', 'personel_covered_(non_clericals)': '434', 'personel_covered_(permanent_staff)': '23', 'number_of_personel_covered_per_category': '23'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-10T14:03:20+00:00', 'updated_at': '2025-09-10T14:03:20+00:00'}}
+WARNING | 2025-09-10 14:03:20,791 | routes.func_router | create_quote() | L232 | {'id': 'cb2b192c-39ff-41b8-8cc4-1703be4b781f', 'project_id': '70c2da2c-dc94-4a1b-839e-d0165b4ec759', 'prospect_id': '2d0fb7c8-1a1f-44e2-bb0c-936f9f51af78', 'policy_type_id': '00000000-0000-3000-8000-a10000000009', 'insurance_company_id': None, 'premium': Decimal('0.00'), 'currency': 'GHS', 'valid_until': datetime.date(2025, 9, 5), 'document_url': '', 'entry_data': {'option_type': '', 'policy_cover': '00000000-0000-5000-8000-a10000000054', 'personel_covered_(clericals)': '34', 'business_description_or_trade': 'new business', 'personel_covered_(casual_staff)': '435', 'personel_covered_(non_clericals)': '434', 'personel_covered_(permanent_staff)': '23', 'number_of_personel_covered_per_category': '23'}, 'created_by': '20000000-0000-4001-0000-010000000001', 'status': '', 'created_at': '2025-09-10T14:03:20+00:00', 'updated_at': '2025-09-10T14:03:20+00:00'}
+WARNING | 2025-09-24 19:28:47,312 | log_conf        | init_logger() | L22 | Logger setup conpleted successfully!
+WARNING | 2025-09-24 19:29:19,252 | log_conf   | init_logger() | L22 | Logger setup conpleted successfully!
+WARNING | 2025-09-24 19:29:55,584 | log_conf   | init_logger() | L22 | Logger setup conpleted successfully!
+WARNING | 2025-09-24 19:30:28,697 | log_conf   | init_logger() | L22 | Logger setup conpleted successfully!
+WARNING | 2025-09-24 19:30:54,339 | log_conf   | init_logger() | L22 | Logger setup conpleted successfully!
+WARNING | 2025-09-24 19:31:37,759 | log_conf   | init_logger() | L22 | Logger setup conpleted successfully!
+WARNING | 2025-09-24 19:33:52,499 | log_conf   | init_logger() | L22 | Logger setup conpleted successfully!

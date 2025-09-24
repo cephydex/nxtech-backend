@@ -39,16 +39,19 @@ class ProductColumnRepo:
 
 
     def fetch_by_id(id: str) -> List:
-        # tmp_result =   ProductColumnRepo.q_builder.\
-        #         statement(
-        #             "SELECT * FROM public.product_columns WHERE data->>'product_id' = '00000000-0000-3000-8000-a10000000003'"
-        #         )
-
+        # SELECT * FROM public.product_columns WHERE data->>'product_id' = '00000000-0000-3000-8000-a10000000003';
         tmp_result =   ProductColumnRepo.q_builder.\
                 statement(
-                    "SELECT * FROM public.product_columns WHERE data->>'product_id' = '?'"
-                , ['00000000-0000-3000-8000-a10000000003'])
+                    "SELECT data FROM public.product_columns WHERE data->>'product_id' = '?' LIMIT 1"
+                , [id])
         return tmp_result
 
-        # SELECT * FROM public.product_columns WHERE data->>'product_id' = '00000000-0000-3000-8000-a10000000003';
+
+    def fetch_by_id2(id: str) -> List:
+        tmp_result =   ProductColumnRepo.q_builder.\
+                statement(
+                    f"SELECT * FROM public.product_columns WHERE data->>'product_id' = '{id}'"
+                )
+
+        return tmp_result
         

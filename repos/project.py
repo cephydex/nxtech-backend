@@ -101,40 +101,44 @@ class ProjectRepo:
     def fetch_all() -> List:
         result =  Project\
                     .with_('prospect')\
-                        .with_('stages').all()
+                        .with_('stages')\
+                            .with_('product')\
+                        .all()
         
         return result.serialize()
-
 
     def fetch_all_gen() -> List:
         result =  ProjectRepo.q_builder\
             .left_join('prospects', 'prospects.id', '=', 'projects.prospect_id')\
+                .left_join('policy_categories', 'policy_categories.id', '=', 'projects.policy_type_id')\
             .select(
                 'id', 'prospects.client_type', 'prospects.first_name', 'prospects.last_name', 
-                'prospects.email', 'prospects.company_name', "prospects.source", "created_at", "prospect_id"
+                'prospects.email', 'prospects.company_name', "prospects.source", "created_at", "prospect_id",
+                "policy_categories.name",
             )\
             .get()
         
         return result.serialize()
 
-
     def fetch_all_gen_by_prospect(prospect_id: str) -> List:
         result =  ProjectRepo.q_builder\
             .left_join('prospects', 'prospects.id', '=', 'projects.prospect_id')\
+            .left_join('policy_categories', 'policy_categories.id', '=', 'projects.policy_type_id')\
             .select(
                 'id', 'prospects.client_type', 'prospects.first_name', 'prospects.last_name', 
-                'prospects.email', 'prospects.company_name', "prospects.source", "created_at", "prospect_id"
+                'prospects.email', 'prospects.company_name', "prospects.source", "created_at", "prospect_id",
+                "policy_categories.name"
             )\
                 .where('prospect_id', prospect_id)\
             .get()
         
         return result.serialize()
 
-
     def fetch_by_id(id: str) -> List:
         tmp_result =  Project\
                     .with_('prospect')\
                         .with_('stages')\
+                            .with_('product')\
                             .find(id)
         result = tmp_result.serialize() if tmp_result else None
         return result
@@ -144,6 +148,7 @@ class ProjectRepo:
         tmp_result =  Project\
                     .with_('prospect')\
                         .with_('stages')\
+                        .with_('product')\
                             .where('prospect_id', id)\
                                 .get()
         result = tmp_result.serialize() if tmp_result else None

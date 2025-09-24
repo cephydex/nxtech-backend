@@ -1,9 +1,12 @@
 from typing import List
 import uuid
 import logging
+import json
 from schemas.Quote import QuoteCreate, QuoteResult
 from models.Quote import Quote
 from masoniteorm.query import QueryBuilder
+from models.QuoteExtra import QuoteExtra
+from schemas.QuoteExtra import QuoteExtraCreate
 
 logger = logging.getLogger(__name__)
 
@@ -60,35 +63,75 @@ class QuoteRepo:
         return result
 
 
-from models.QuoteExtra import QuoteExtra
-from schemas.QuoteExtra import QuoteExtraRequest
+    def fetch_by_project_id(project_id: str) -> List[QuoteResult]:
+        tmp_result =  Quote\
+                        .with_('prospect')\
+                        .with_('quote_extras')\
+                            .where('project_id', project_id)\
+                                .get()
+        result = tmp_result.serialize()
+        return result
+
+
 class QuoteExtraRepo:
     
-    async def create(e: QuoteExtraRequest):
+    async def create(e: QuoteExtraCreate):
+        res = {'errors': {}, 'data': None,}
+        try:
+            q_data = e.model_dump()
+            print('DATA', q_data)
+            db_res = QuoteExtra.create(q_data)
+            res['data'] = db_res.serialize()
+
+        except Exception as ex:
+            if 'unique constraint' in str(ex):
+                logger.error(f"Quote extras {e.quote_id} | ({e.extras}) already exists")
+                res['errors']["unique_constraint"] = str(ex)
+            logger.error(str(ex))
+
+        return res
+    
+    
+    async def create_multiple(quote_id: str, e: List[QuoteExtraCreate]):
         res = {'errors': {}, 'data': None,}
         q_data = []
+        created_by = e[0].created_by
+
         try:
-            for item in e.extras:
-                q_data.append({
-                    "id": str(uuid.uuid4()),
-                    "quote_id": e.quote_id,
-                    "type": item.type,
-                    "description": item.description,
-                })
+            for item in e:
+                tmp = item.model_dump()
+                tmp["quote_id"] = quote_id
+                tmp["created_by"] = created_by
+                tmp["extras"] = json.dumps(item.extras)
+                q_data.append(tmp)
 
             db_res = QuoteExtra.bulk_create(q_data)
             res['data'] = db_res.serialize()
 
         except Exception as ex:
             if 'unique constraint' in str(ex):
-                logger.error(f"Quote extra {e.type} | ({e.description}) already exists")
+                logger.error(f"Quote extras for quote {quote_id} already exists")
                 res['errors']["unique_constraint"] = str(ex)
             logger.error(str(ex))
 
+        return res
+    
+    async def update_selected_extras(quote_id:str, ins_company_id:str):
+        res = {'errors': {}, 'data': None,}
+        result = QuoteExtra.where('quote_id', quote_id)\
+            .where('insurance_company_id', ins_company_id)\
+                .update({"accepted": True})
+        # print("DET", result.serialize())
+        res['data'] = result.serialize()
         return res
 
     def fetch_all() -> List[QuoteResult]:
         result =  QuoteExtra.all()
         # result =  Quote.with_('title').with_('stages').all()
+        
+        return result.serialize()
+
+    def fetch_by_quote_id(quote_id:str) -> List:
+        result =  QuoteExtra.where('quote_id', quote_id).all()
         
         return result.serialize()

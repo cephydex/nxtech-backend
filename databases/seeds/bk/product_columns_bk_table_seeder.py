@@ -17,7 +17,7 @@ class ProductColumnsTableSeeder(Seeder):
             "id": "00000001-1200-0000-0000-a1c000000000",
             "data": json.dumps({"product_id": "00000000-0000-3000-8000-a10000000000",
             "fields": [
-                {"name":"Business Description or Trade", "type":"text", "required":"1"}, {"name":"Registration Number", "type":"string", "required":"1"}, {"name":"Make/Brand of Vehicle", "type":"select", "required":"1"}, {"name":"Model of Vehicle", "type":"select", "required":"1"},
+                {"name":"Business Description or Trade", "type":"text", "required":"1"}, {"name":"Registration Number", "type":"string", "required":"1"}, {"name":"Make and Model of Vehicle", "type":"string", "required":"1"},
                 {"name":"Colour of Vehicle", "type":"string", "required":"1"}, {"name":"Chassis Number", "type":"string", "required":"1"}, {"name":"Year of Manufacture", "type":"string", "required":"1"}, {"name":"Sum Insured", "type":"float", "required":"1"},
             ]})
         })
@@ -41,11 +41,11 @@ class ProductColumnsTableSeeder(Seeder):
             "fields": {
                 "Liability": [
                     {"name":"Business Description or Trade","type":"text","required":"1"},{"name":"Locations Covered", "type":"string", "required":"1"},{"name":"Coverage Type (Claims Made or Claims Occurring)","type":"string","required":"1"},
-                   {"name":"Discovery Period"}, {"name":"Sum Insured"},
+                   {"Discovery Period":"string"}, {"Sum Insured":"float"},
                 ],
                 "All Others": [
-                    {"name":"Business Description or Trade","type":"text","required":"1"}, {"name":"Locations Covered","type":"string","required":"1"},{"name":"Coverage Type (Claims Made or Claims Occurring)","type":"string","required":"1"},
-                    {"name":"Discovery Period","type":"integer","required":"1"},{"name":"Sum Insured","type":"float","required":"1"}
+                    {"Business Description or Trade":"text"}, {"Locations Covered":"string"},{"Coverage Type (Claims Made or Claims Occurring)":"string"},
+                    {"Discovery Period":"string"},{"Sum Insured":"float"}
                 ]
             }})
         })
@@ -56,18 +56,18 @@ class ProductColumnsTableSeeder(Seeder):
             "options": ["Marine Hull", "Marine Cargo"],
             "fields": {
                 "Marine Hull": [
-                    {"name":"Description of Vessel","type":"text","required":"1"}, {"name":"Name of Vessel","type":"string","required":"1"}, {"name":"Year of Manufacture","type":"integer","required":"1"},
-                    {"name":"Flag of Vessel","type":"string","required":"1"}, {"name":"Origin of Vessel","type":"string","required":"1"}, {"name":"Destination of Vessel","type":"string","required":"1"}, {"name":"Value of Hull","type":"float","required":"1"},
-                    {"name":"Value of Machinery","type":"float","required":"1"}, {"name":"Total Value of Vessel", "type":"sum","required":"0"},
+                    {"Description of Vessel":"text"}, {"Name of Vessel":"string"}, {"Year of Manufacture":"integer"},
+                    {"Flag of Vessel":"string"}, {"Origin of Vessel":"string"}, {"Destination of Vessel":"string"}, {"Value of Hull":"float"},
+                    {"Value of Machinery":"float"}, {"Total Value of Vessel":"calculation"},
                 ],
                 "Marine Cargo": [
-                    {"name":"Description of Cargo","type":"text","required":"1"}, {"name":"Supplier’s/Commercial Invoice & Number","type":"string","required":"1"}, 
-                    {"name":"Bill of Lading/Airway Bill","type":"file","required":"1"}, {"name":"Bill of Lading/Airway Bill Number","type":"string","required":"1"},
-                    {"name":"Customs Bill of Entry (BOE) & Number","type":"file","required":"1"}, {"name":"Letter of Credit (if need be)","type":"file","required":"0"}, {"name":"Name of Vessel/Flight","type":"string","required":"1"},
-                    {"name":"Vessel/Flight Number","type":"string","required":"1"}, {"name":"Vessel Flag","type":"string","required":"1"}, {"name":"Port of Loading","type":"string","required":"0"}, {"name":"Port of Destination","type":"string","required":"1"},
-                    {"name":"Method of Packaging (Container, Bulk, Ro-Ro, Other)","type":"string","required":"0"}, {"name":"Final Destination Address (warehouse location, etc)","type":"string","required":"0"},
-                    {"name":"Sailing/Flight Date","type":"date","required":"0"}, {"name":"Estimated Arrival Date","type":"date","required":"0"}, {"name":"Transhipment Details","type":"text","required":"0"},
-                    {"name":"Value of Shipment/Consignment","type":"float","required":"1"}, {"name":"Total Estimated Carrying Value","type":"float","required":"1"},
+                    {"Description of Cargo":"text"}, {"Supplier’s/Commercial Invoice & Number":"string"}, 
+                    {"Bill of Lading/Airway Bill":"file"}, {"Bill of Lading/Airway Bill Number":"string"},
+                    {"Customs Bill of Entry (BOE) & Number":"string"}, {"Letter of Credit (if need be)":"file"}, "Name of Vessel/Carrier",
+                    {"Vessel/Flight Name and Number":"string"}, {"Vessel Flag":"string"}, {"Port of Loading":"string"}, {"Port of Destination":"string"},
+                    {"Method of Packaging (Container, Bulk, Ro-Ro, Other)":"string"}, {"Final Destination Address (warehouse location, etc)":"string"},
+                    {"Sailing/Flight Date":"date"}, {"Estimated Arrival Date":"date"}, {"Transhipment Details":"text"},
+                    {"Value of Shipment/Consignment":"float"}, {"Total Estimated Carrying Value":"float"},
                 ]
             }})
         })
@@ -76,8 +76,8 @@ class ProductColumnsTableSeeder(Seeder):
             "id": "00000000-0000-3000-8000-a1c000000004",
             "data": json.dumps({"product_id": "00000000-0000-3000-8000-a10000000004",
             "fields": [
-                {"name":"Description of Goods","type":"text","required": "1"}, {"name":"Loading Location","type":"string","required": "1"}, {"name":"Destination","type":"string","required": "1"},
-                {"name":"Type of Carrying Vehicle","type":"string","required": "0"}, {"name":"Value Per Transit","type":"float","required": "0"}, {"name":"Estimated Carrying Value","type":"float","required": "1"},
+                {"Description of Goods":"text"}, {"Loading Location":"string"}, {"Destination":"string"},
+                {"Type of Carrying Vehicle":"string"}, {"Value Per Transit":"float"}, {"Estimated Carrying Value":"float"},
             ]})
         })
 
@@ -87,22 +87,22 @@ class ProductColumnsTableSeeder(Seeder):
             "options": ["Contractors All Risks", "Erection All Risks", "All Others"],
             "fields": {
                 "Contractors All Risks": [
-                    {"name":"Business Description or Trade","type":"string", "required": "1"}, {"name":"Description of Contract/Project","type":"text", "required": "1"},
-                    {"name":"Location of Contract/Project","type":"string", "required": "0"}, {"name":"Total Value of Contract","type":"float", "required": "1"},
-                    {"name":"Contract Works & Materials Value","type":"float", "required": "1"}, {"name":"Plant and Machinery & Value","type":"float", "required": "1"},
-                    {"name":"Third Party Liability & Value","type":"float", "required": "0"}, {"name":"Contract Period (Months)","type":"integer", "required": "1"}, {"name":"Defect Liability Period","type":"integer", "required": "0"}, 
-                    {"name":"Name of Employer/Principal","type":"string", "required": "1"}, {"name":"Name of Contractor","type":"string", "required": "1"}, {"name":"Name of Sub-Contractor","type":"string", "required": "0"}
+                    {"Business Description or Trade":"string"}, {"Description of Contract/Project":"text"},
+                    {"Location of Contract/Project":"string"}, {"Total Value of Contract":"float"},
+                    {"Contract Works & Materials Value":"float"}, {"Plant and Machinery & Value":"float"},
+                    {"Third Party Liability & Value":"float"}, {"Contract Period (Months)":"integer"}, {"Defect Liability Period":"integer"}, 
+                    {"Name of Employer/Principal":"string"}, {"Name of Contractor":"string"}, {"Name of Sub-Contractor":"string"}
                 ],
                 "Erection All Risks": [
-                    {"name":"Business Description or Trade","type":"string", "required": "1"}, {"name":"Description of Contract/Project","type":"text", "required": "1"},
-                    {"name":"Location of Contract/Project","type":"string", "required": "0"}, {"name":"Total Value of Contract","type":"float", "required": "1"},
-                    {"name":"Contract Works & Materials Value","type":"float", "required": "1"}, {"name":"Plant and Machinery & Value","type":"float", "required": "1"},
-                    {"name":"Third Party Liability & Value","type":"float", "required": "0"}, {"name":"Contract Period (Months)","type":"integer", "required": "1"}, {"name":"Defect Liability Period","type":"integer", "required": "0"}, 
-                    {"name":"Name of Employer/Principal","type":"string", "required": "1"}, {"name":"Name of Contractor","type":"string", "required": "1"}, {"name":"Name of Sub-Contractor","type":"string", "required": "0"}
+                    {"Business Description or Trade":"string"}, {"Description of Contract/Project":"text"},
+                    {"Location of Contract/Project":"string"}, {"Total Value of Contract":"float"},
+                    {"Contract Works & Materials Value":"float"}, {"Plant and Machinery & Value":"float"},
+                    {"Third Party Liability & Value":"float"}, {"Contract Period (Months)":"integer"}, {"Defect Liability Period":"integer"}, 
+                    {"Name of Employer/Principal":"string"}, {"Name of Contractor":"string"}, {"Name of Sub-Contractor":"string"}
                 ],
                 "All Others": [
-                    {"name":"Business Description or Trade","type":"string","required":"1"}, {"name":"Description of Property","type":"text","required":"1"}, 
-                    {"name":"Location of Property","type":"string","required":"0"}, {"name":"Total Value of Property","type":"float","required":"1"}
+                    {"Business Description or Trade":"string"}, {"Description of Property":"text"}, 
+                    {"Location of Property":"string"}, {"Total Value of Property":"float"}
                 ]
             }})
         })
@@ -113,10 +113,10 @@ class ProductColumnsTableSeeder(Seeder):
             "options": ["Medical Health"],
             "fields": {
                 "Medical Health": [
-                    {"name":"Business Description or Trade","type":"string","required": "1"}, {"name":"Number of Staff","type":"integer","required":"1"}, {"name":"Number of Dependants","type":"integer","required":"1"},
-                    {"name":"Number of Males","type":"integer"}, {"name":"Number of Female","type":"integer"}, {"name":"Total Number of Members","type":"integer","required":"1"},
-                    {"name":"In Patient Limit","type":"integer","required":"1"}, {"name":"Out Patient Limit","type":"integer","required":"1"},{"name":"Optical Limit","type":"integer","required":"1"}, {"name":"Dental Limit","type":"integer","required":"1"},
-                    {"name":"Maternity Limit","type":"integer","required":"1"}, {"name":"Pre-Existing Condition","type":"text","required":"0"},
+                    {"Business Description or Trade":"string"}, {"Number of Staff":"integer"}, {"Number of Dependants":"integer"},
+                    {"Number of Males":"integer"}, {"Number of Female":"integer"}, {"Total Number of Members":"integer"},
+                    {"In Patient Limit":"integer"}, {"Out Patient Limit":"integer"},{"Optical Limit":"integer"}, {"Dental Limit":"integer"},
+                    {"Maternity Limit":"integer"}, {"Pre-Existing Condition":"text"},
                 ],
             }})
         })
@@ -127,9 +127,9 @@ class ProductColumnsTableSeeder(Seeder):
             "options": ["Life"],
             "fields": {
                 "Life": [
-                    {"name":"Business Description or Trade","type":"text","required":"1"}, {"name":"Personel Covered (Permanent Staff)","type":"integer","required":"1"},
-                    {"name":"Personel Covered (Casual Staff)","type":"integer","required":"1"},{"name":"Number of Personel Covered Per Category","type":"integer","required":"1"},
-                    {"name":"Average Age of Staff Covered","type":"float","required":"1"}, {"name":"Total Annual Salaries","type":"float","required":"1"}, {"name":"Capital Sum","type":"float","required":"0"},
+                    {"Business Description or Trade":"text"}, {"Personel Covered (Permanent Staff)":"integer"},
+                    {"Personel Covered (Casual Staff)":"integer"},{"Number of Personel Covered Per Category":"integer"},
+                    {"Average Age of Staff Covered":"float"}, {"Total Annual Salaries":"float"}, {"Capital Sum":"float"},
                 ]
             }})
         })
@@ -140,12 +140,12 @@ class ProductColumnsTableSeeder(Seeder):
             "options": ["Contractual", "Customs"],
             "fields": {
                 "Contractual": [
-                    {"name":"Description of Contract or Trade","type":"text","required":"1"}, {"name":"Name of Principal/Employer","type":"string","required":"1"},{"name":"Name of Contractor","type":"string","required":"1"}, 
-                    {"name":"Value of Contract","type":"float","required":"1"}, {"name":"Bond Amount","type":"float","required":"0"}, {"name":"Period of Bond","type":"integer","required":"1"}
+                    {"Description of Contract or Trade":"text"}, {"Name of Principal/Employer":"string"},
+                    {"Name of Contractor":"string"}, {"Value of Contract":"float"}, {"Bond Amount":"float"}, {"Period of Bond":"integer"}
                 ],
                 "Customs": [
-                    {"name":"Business Description or Trade","type":"string","required":"1"}, {"name":"Name of Principal/Employer","type":"string","required":"1"},
-                    {"name":"Description of Contract","type":"text","required":"0"},{"name":"Bond Amount/Value","type":"float","required":"1"}, {"name":"Period of Bond","type":"integer","required":"1"}
+                    {"Business Description or Trade":"text"}, {"Name of Principal/Employer":"string"},
+                    {"Description of Contract":"text"},{"Bond Amount/Value":"float"}, {"Period of Bond":"integer"}
                 ],
             }})
         })
@@ -154,11 +154,13 @@ class ProductColumnsTableSeeder(Seeder):
             "id": "00000000-0000-3000-8000-a1c000000008",
             "data": json.dumps({"product_id": "00000000-0000-3000-8000-a10000000009",
             "fields": [
-                {"name":"Business Description or Trade","type":"text","required":"1"}, {"name":"Personel Covered (Permanent Staff)","type":"integer","required":"1"}, {"name":"Personel Covered (Casual Staff)","type":"integer","required":"1"},
-                {"name":"Personel Covered (Clericals)","type":"integer","required":"0"},{"name":"Personel Covered (Non Clericals)","type":"integer","required":"0"}, {"name":"Number of Personel Covered Per Category","type":"integer","required":"1"}, 
-                {"name":"Total Annual Salaries","type":"float","required":"1"},
+                {"Business Description or Trade":"text"}, {"Personel Covered (Permanent Staff)":"integer"}, {"Personel Covered (Casual Staff)":"integer"},
+                {"Personel Covered (Clericals)":"integer"},{"Personel Covered (Non Clericals)":"integer"}, {"Number of Personel Covered Per Category":"integer"}, 
+                {"Total Annual Salaries":"float"},
             ]})
         })
+
+
         
         # Just for keeps
         # ProductColumn.create({

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from fastapi import Request
 from http import HTTPStatus
 from utils.cjwt import JWTBearer
@@ -16,6 +16,9 @@ import traceback
 from repos.bank_n_ins_comp import BankRepo, InsuranceCompanyRepo
 from repos.user import UserRepo
 from utils.str import fmtPhoneNumber
+from repos.policy_type import PolicyTypeRepo
+from repos.policy_category import PolicyCategoryRepo
+from repos.vehicle import VehicleRepo
 
 logger = logging.getLogger(__name__)
 router = APIRouter(
@@ -160,17 +163,24 @@ def get_insurance_company_by_id(id: str, request:Request, token:str=Depends(auth
             'data': result,
         }
 
-from repos.policy_type import PolicyTypeRepo
-from repos.policy_category import PolicyCategoryRepo
+
 @router.get("/insurance-categories")
 def get_policy_category_list(request:Request):
     result = PolicyCategoryRepo.fetch_all_min()
     
-    return {
-            "message": "Insurance policy categories retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
+    return GenResponse(
+            message="Insurance policy categories retrieved successfully!",
+            status_code=HTTPStatus.OK, data=result,
+        )
+
+@router.get("/insurance-categories/{category_id}/products")
+def get_products_by_category_list(category_id: str):
+    result = PolicyTypeRepo.fetch_by_category_id(category_id)
+    
+    return GenResponse(
+        message="Insurance policy products by categories retrieved successfully!",
+        status_code=HTTPStatus.OK, data=result,
+    )
 
 
 @router.get("/insurance-products")
@@ -275,206 +285,6 @@ async def create_biz_introducer(req_d:BizIntroducerCreate, request:Request, toke
             )
 
 
-
-
-# @router.post("/prospects")
-# async def create_prospect(req_d:ProspectCreate, request:Request, token:str=Depends(auth_bearer)):
-#     userId = auth_bearer.get_user_id(token)
-#     req_d.created_by = str(userId)
-#     req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
-
-#     result = await ProspectRepo.create(req_d)
-#     res_data = result["data"] if result["data"] else None
-#     logger.warning(res_data)
-#     if res_data:
-#         pj = ProjectCreate
-#         pj.prospect_id = res_data["id"]
-#         pj.created_by = str(userId)
-#         pj.status = req_d.stage
-#         p_res = await ProjectRepo.create(pj)
-#         # logger.warning(p_res)
-
-#         psc = ProspectionStageCreate
-#         psc.created_by = str(userId)
-#         psc.project_id = p_res["data"]["id"]
-#         psc.prospect_id = res_data["id"]
-#         psc.stage = req_d.stage
-#         psc.notes = req_d.notes
-#         ps_rs = await ProspectionStageRepo.create(psc)
-#         logger.warning(ps_rs)
-    
-#     msg = "Prospect created successfully!"
-#     code = HTTPStatus.CREATED
-#     if not res_data or not res_data['created_at']:
-#         msg = "Prospect could not be created."
-#         code = HTTPStatus.BAD_REQUEST
-
-#     if result["errors"]:
-#         res_data = result["errors"]
-    
-#     return GenResponse(
-#                 message=msg, data=result, status_code=code, 
-#             )
-
-
-# @router.get("/projects/gen")
-# def get_project_list_general(token:str=Depends(auth_bearer)):
-#     result = ProjectRepo.fetch_all_gen()
-
-#     return GenResponse(
-#                 message="Project(s) retrieved successfully!", 
-#                 data=result, status_code=HTTPStatus.OK, 
-#             )
-
-# @router.get("/projects")
-# def get_project_list(token:str=Depends(auth_bearer)):
-#     result = ProjectRepo.fetch_all()
-
-#     return GenResponse(
-#                 message="Project(s) retrieved successfully!", 
-#                 data=result, status_code=HTTPStatus.OK, 
-#             )
-
-
-# @router.get("/projects/{id}")
-# def get_project_by_id(id:str, token:str=Depends(auth_bearer)):
-#     result = ProjectRepo.fetch_by_id(id)
-
-#     return GenResponse(
-#                 message="Project(s) retrieved by ID successfully!", 
-#                 data=result, status_code=HTTPStatus.OK, 
-#             )
-
-
-# @router.get("/prospects")
-# def get_prospect_list(token:str=Depends(auth_bearer)):
-#     result = ProspectRepo.fetch_all()
-
-#     return GenResponse(
-#                 message="Prospect(s) retrieved successfully!", 
-#                 data=result, status_code=HTTPStatus.OK, 
-#             )
-
-
-# @router.get("/prospects/{id}")
-# def get_prospect_by_id(id:str, token:str=Depends(auth_bearer)):
-#     result = ProspectRepo.fetch_by_id(id)
-    
-#     return GenResponse(
-#                 message="Prospect details retrieved successfully!", 
-#                 data=result, status_code=HTTPStatus.OK, 
-#             )
-
-
-# @router.post("/prospect-stages")
-# async def create_prospect_stage(req_d:ProspectionStageCreate, token:str=Depends(auth_bearer)):
-#     result = await ProspectionStageRepo.create(req_d)
-#     logger.warning(result)
-#     res_data = result["data"] if result["data"] else None
-#     logger.warning(res_data)
-#     # if res_data:
-#     msg = "Prospect stage created successfully!"
-#     code = HTTPStatus.CREATED
-#     if not res_data or not res_data['created_at']:
-#         msg = "Prospect stage could not be created."
-#         code = HTTPStatus.BAD_REQUEST
-
-#     if result["errors"]:
-#         res_data = result["errors"]
-    
-#     return GenResponse(
-#                 message=msg, data=result, status_code=code, 
-#             )
-
-# @router.get("/prospect-stages/{prospect_id}")
-# def get_prospect_stage_list(prospect_id:str, token:str=Depends(auth_bearer)):
-#     result = ProspectionStageRepo.fetch_by_prospect(prospect_id)
-    
-#     return {
-#             "message": "Prospect stage(s) retrieved successfully!",
-#             "status_code": HTTPStatus.OK,
-#             'data': result,
-#         }
-
-
-# @router.get("/policy-categories")
-# def get_policy_category_list():
-#     from repos.policy_category import PolicyCategoryRepo
-#     result = PolicyCategoryRepo.fetch_all()
-#     # result = PolicyCategory.all(["id", "name"]).serialize()
-
-#     return GenResponse(
-#                 message="Policy categories retrieved successfully!", 
-#                 data=result, status_code=HTTPStatus.OK, 
-#             )
-
-
-# @router.get("/policy-types")
-# def get_policy_type_list(token:str=Depends(auth_bearer)):
-#     from repos .policy_type import PolicyTypeRepo
-#     result = PolicyTypeRepo.fetch_all_min()
-#     # result = PolicyType.all(["id", "name", "commission"]).serialize()
-
-#     return GenResponse(
-#                 message="Policy type(s) retrieved successfully!", 
-#                 data=result, status_code=HTTPStatus.OK, 
-#             )
-
-
-# from repos.client import ClientRepo, ClientContactRepo
-# from schemas.Client import ClientCreate, ClientContactCreate
-# from utils.str import fmtPhoneNumber
-# @router.post("/clients")
-# async def create_client(req_d:ClientCreate, request:Request, token:str=Depends(auth_bearer)):
-#     userId = auth_bearer.get_user_id(token)
-#     req_d.created_by = str(userId)
-
-#     clientId = getNextMemberId()
-#     req_d.client_code = clientId
-#     req_d.contact_no = fmtPhoneNumber(req_d.contact_no)
-
-#     result = await ClientRepo.create(req_d)
-#     res_data = result["data"] if result["data"] else None
-#     logger.warning(res_data)
-    
-#     msg = "Client created successfully!"
-#     code = HTTPStatus.CREATED
-#     if not res_data or not res_data['created_at']:
-#         msg = "Client could not be created."
-#         code = HTTPStatus.BAD_REQUEST
-
-#     if result["errors"]:
-#         res_data = result["errors"]
-    
-#     return GenResponse(
-#                 message=msg,
-#                 status_code=code, 
-#                 data=result,
-#             )
-
-
-# @router.get("/clients")
-# def get_client_list(request:Request, token:str=Depends(auth_bearer)):
-#     result = ClientRepo.fetch_all()
-    
-#     return {
-#             "message": "Client(s) retrieved successfully!",
-#             "status_code": HTTPStatus.OK,
-#             'data': result,
-#         }
-
-
-# @router.get("/clients/{id}")
-# async def get_client(id: str, token:str=Depends(auth_bearer)):
-#     result = ClientRepo.fetch_by_id(id)
-    
-#     return {
-#             "message": "Client retrieved successfully!",
-#             "status_code": HTTPStatus.OK,
-#             'data': result,
-#         }
-
-
 # @router.post("/client-contacts")
 # async def create_client_contact(client_id: str,req_d:ClientContactCreate, request:Request, token:str=Depends(auth_bearer)):
 #     req_d.client_id = client_id
@@ -557,51 +367,6 @@ async def create_biz_introducer(req_d:BizIntroducerCreate, request:Request, toke
 
 
 # @router.get("/prospects")
-# def get_prospect_stage__list(request:Request, token:str=Depends(auth_bearer)):
-#     result = ClientContactRepo.fetch_all()
-
-#     return GenResponse(
-#                 message="All Prospection stage(s) retrieved successfully!",
-#                 status_code=HTTPStatus.OK, 
-#                 data=result,
-#             )
-
-
-# @router.get("/prospects/client/{client_id}")
-# async def get_prospect_stages_by_client(client_id: str, token:str=Depends(auth_bearer)):
-#     result = ProspectionStageRepo.fetch_by_client_id(client_id)
-    
-#     return GenResponse(
-#                 message="Prospection stage retrieved for client, was successfully!",
-#                 status_code=HTTPStatus.OK, 
-#                 data=result,
-#             )
-
-
-# @router.get("/prospects/user/{user_id}")
-# async def get_prospect_stages_by_user(user_id: str, token:str=Depends(auth_bearer)):
-#     result = ProspectionStageRepo.fetch_by_user_id(user_id)
-    
-#     return GenResponse(
-#                 message="Prospection stage retrieved for user, was successfully!",
-#                 status_code=HTTPStatus.OK, 
-#                 data=result,
-#             )
-
-
-# @router.get("/prospects/user")
-# async def get_prospect_stages_by_loggedin_user(token:str=Depends(auth_bearer)):
-#     user_id = auth_bearer.get_user_id(token)
-#     result = ProspectionStageRepo.fetch_by_user_id(user_id)
-    
-#     return GenResponse(
-#                 message="Prospection stage retrieved for user, was successfully!",
-#                 status_code=HTTPStatus.OK, 
-#                 data=result,
-#             )
-
-
-# @router.get("/prospects")
 # async def get_all_prospects(token:str=Depends(auth_bearer)):
 #     # user_id = auth_bearer.get_user_id(token)
 #     result = ProspectionStageRepo.fetch_all()
@@ -621,6 +386,25 @@ async def create_biz_introducer(req_d:BizIntroducerCreate, request:Request, toke
 #             "status_code": HTTPStatus.OK,
 #             'data': result,
 #         }
+
+
+@router.get("/vehicles/brands")
+def get_vehicle_brand_list():
+    result = VehicleRepo.fetch_all_brands()
+    
+    return GenResponse(
+        message="Vehicle brands retrieved successfully!",
+        data=result, status_code=HTTPStatus.OK
+    )
+
+@router.get("/vehicles/brands/{brand_id}")
+def get_vehicle_brand_model_list(brand_id:str):
+    result = VehicleRepo.fetch_all_brand_models(brand_id)["models"]
+    
+    return GenResponse(
+        message="Vehicle brand models retrieved successfully!",
+        data=result, status_code=HTTPStatus.OK
+    )
 
 
 @router.get("/prof-groups")

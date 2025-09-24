@@ -67,3 +67,12 @@ class PolicyTypeRepo:
                             .find(id)
         result = tmp_result.serialize() if tmp_result else None
         return result
+
+
+    def fetch_by_category_id(cat_id: str) -> List[PolicyTypeResult]:
+        tmp_result =  PolicyType\
+                        .with_('policy_category')\
+                            .where('cat_id', cat_id)\
+                                .get()
+        result = tmp_result.serialize() if tmp_result else None
+        return result

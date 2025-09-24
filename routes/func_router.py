@@ -1,18 +1,18 @@
-from fastapi import APIRouter, Response, Depends, HTTPException
+import logging
+import traceback
+from fastapi import APIRouter, Depends
 from fastapi import Request
 from http import HTTPStatus
 from utils.cjwt import JWTBearer
 from schemas.Resp import GenResponse
-import logging
-import traceback
 from utils.str import fmtPhoneNumber
 from repos.prospect import ProspectRepo, ProspectionStageRepo
-from schemas.Prospect import ProspectCreate, ProspectionStageCreate, ProspectCreateWProduct
+from schemas.Prospect import ProspectionStageCreate, ProspectCreateWProduct
 from repos.project import ProjectCreate, ProjectRepo, ProjectCreateMany
 from repos.product_column import ProductColumnRepo
-from schemas.QuoteExtra import QuoteExtraRequest
-from repos.quote import QuoteExtraRepo
-from repos.quote import QuoteRepo, QuoteCreate
+from repos.policy_category import PolicyCategoryRepo
+from repos.vehicle import VehicleRepo
+
 
 logger = logging.getLogger(__name__)
 router = APIRouter(
@@ -158,6 +158,7 @@ def get_project_under_a_prospect(prospect_id:str, token:str=Depends(auth_bearer)
 
 @router.post("/prospect-stages")
 async def create_prospect_stage(req_d:ProspectionStageCreate, token:str=Depends(auth_bearer)):
+    req_d.created_by = auth_bearer.get_user_id(token)
     result = await ProspectionStageRepo.create(req_d)
     logger.warning(result)
     res_data = result["data"] if result["data"] else None
@@ -187,95 +188,32 @@ def get_prospect_stage_list(project_id:str, token:str=Depends(auth_bearer)):
         }
 
 
-
 @router.get("/product-fields")
-def get_all_product_fields(request:Request, 
-    # token:str=Depends(auth_bearer)
-):
+def get_all_product_fields(token:str=Depends(auth_bearer)):
     result = ProductColumnRepo.fetch_all()
-    print('Product column', result)
-    
-    return {
-            "message": f"Banks with {id} retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
+    return GenResponse(
+            data=result, status_code=HTTPStatus.OK,
+            message="Product fields retrieved successfully!"
+        )
 
 
 @router.get("/product-fields/{id}")
-def get_product_specific_field(id: str, request:Request, 
-    # token:str=Depends(auth_bearer)
-):
+def get_product_specific_field(id: str, token:str=Depends(auth_bearer)):
     result = ProductColumnRepo.fetch_by_id(id)
-    print('Product column', result)
-    
-    return {
-            "message": f"Product fields with {id} retrieved successfully!",
-            "status_code": HTTPStatus.OK,
-            'data': result,
-        }
+    if result and len(result) > 0: result = result[0]["data"]["fields"]
 
-
-@router.post("/quotes")
-async def create_quote(req_d:QuoteCreate, token:str=Depends(auth_bearer)):
-    # userId = auth_bearer.get_user_id(token)
-    req_d.created_by = auth_bearer.get_user_id(token)
-    result = await QuoteRepo.create(req_d)
-    logger.warning(result)
-    res_data = result["data"] if result["data"] else None
-    logger.warning(res_data)
-    # if res_data:
-    msg = "Quote created successfully!"
-    code = HTTPStatus.CREATED
-    if not res_data or not res_data['created_at']:
-        msg = "Quote could not be created."
-        code = HTTPStatus.BAD_REQUEST
-
-    if result["errors"]:
-        res_data = result["errors"]
-    
-    return GenResponse(
-                message=msg, data=result, status_code=code, 
-            )
-
-
-@router.get("/quotes")
-def get_all_quotes(token:str=Depends(auth_bearer)):
-    result = QuoteRepo.fetch_all()
-    
-    return GenResponse(
-                message="Quotes retrieved successfully!",
-                status_code=HTTPStatus.OK, 
-                data=result,
-            )
-
-
-@router.post("/quote-extras")
-async def create_quote_extras(req_d:QuoteExtraRequest, token:str=Depends(auth_bearer)):
-    result = await QuoteExtraRepo.create(req_d)
-    res_data = result["data"] if result["data"] else None
-    
-    msg = "Quote extra(s) created successfully!"
-    code = HTTPStatus.CREATED
-    if not res_data or not len(res_data) >= 0:
-        msg = "Quote extra(s) could not be created."
-        code = HTTPStatus.BAD_REQUEST
-
-    if result["errors"]:
-        res_data = result["errors"]
-    
-    return GenResponse(
-                message=msg, data=result, status_code=code, 
-            )
-
-@router.get("/quote-extras")
-def get_all_quote_extras(token:str=Depends(auth_bearer)):
-    result = QuoteExtraRepo.fetch_all()
+    cat = PolicyCategoryRepo.fetch_by_id(id=id)
+    if "Motor" in cat.get("name"):
+        v_brands = VehicleRepo.fetch_all_brands()
+        for i, item in enumerate(result):
+            if item['name'] == 'Make/Brand of Vehicle':
+                result[i]["list"] = v_brands
 
     return GenResponse(
-                message="Quote extra(s) retrieved successfully!",
-                status_code=HTTPStatus.OK, data=result,
-            )
+            data=result, status_code=HTTPStatus.OK,
+            message=f"Product field with {id} retrieved successfully!"
+        )
+
 
 # from repos.client import ClientRepo, ClientContactRepo
 # from schemas.Client import ClientCreate, ClientContactCreate

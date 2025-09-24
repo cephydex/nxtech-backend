@@ -16,3 +16,8 @@ class Project(Model):
     def prospect(self):
         from models.Prospect import Prospect
         return Prospect
+
+    @has_one("id", "policy_type_id")
+    def product(self):
+        from models.PolicyCategory import PolicyCategory
+        return PolicyCategory
