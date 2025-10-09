@@ -22,6 +22,7 @@ class QuotesTable(Migration):
             table.string("status")
             table.string("document_url").nullable()
             table.jsonb("entry_data")
+            table.bool("has_policy").default(False)
             table.timestamps()
             # id, lead_id, product_code, coverage, premium, currency, valid_until, status, quote_document_url
 

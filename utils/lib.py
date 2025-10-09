@@ -8,6 +8,12 @@ from dotenv import load_dotenv
 # from enum import Enum as PyEnum
 import requests
 
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+# from datetime import datetime, timedelta
+from pytz import timezone
+
+
 load_dotenv()
 logger = logging.getLogger()
 
@@ -24,6 +30,38 @@ logger = logging.getLogger()
 #         yield db
 #     finally:
 #         db.close()
+
+class Utils:
+
+    def calculate_month_addition(months:int = 12):
+        # date = datetime(2025, 9, 24)
+        date = datetime.now().date()
+        # Add months
+        return date + relativedelta(months=months)
+
+    
+    def compareDates(date_str):
+        tz = timezone('UTC')
+        currentDate = datetime.now(tz)
+        
+        try:
+            # Parse the provided date string into a datetime object
+            target_dateTime = datetime.fromisoformat(date_str)
+        
+        except ValueError:
+            # Handle the case where the date_str cannot be parsed
+            return False
+        
+        time_diff = currentDate - target_dateTime
+
+        time_threshold = timedelta(minutes=10)
+    
+        if time_diff > time_threshold:
+            return True
+        
+        return False
+
+
 
 class GQL:
     

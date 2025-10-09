@@ -1,11 +1,11 @@
 from typing import List
 import uuid
 import logging
-import traceback
-from schemas.Project import ProjectCreate, ProjectCreateMany
+from .model import ProjectCreate, ProjectCreateMany
 from models.Project import Project
 from models.ProspectionStage import ProspectionStage
 from masoniteorm.query import QueryBuilder
+# import traceback
 
 logger = logging.getLogger(__name__)
 

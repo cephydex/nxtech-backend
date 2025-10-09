@@ -2,11 +2,11 @@ from typing import List
 import uuid
 import logging
 import json
-from schemas.Quote import QuoteCreate, QuoteResult
+from .model import QuoteCreate, QuoteResult, QuoteExtraCreate
 from models.Quote import Quote
-from masoniteorm.query import QueryBuilder
 from models.QuoteExtra import QuoteExtra
-from schemas.QuoteExtra import QuoteExtraCreate
+from masoniteorm.query import QueryBuilder
+
 
 logger = logging.getLogger(__name__)
 
@@ -19,18 +19,18 @@ class QuoteRepo:
         import json
         try:
             db_item = Quote()
-            db_item.id=str(uuid.uuid4()),
-            db_item.project_id= e.project_id,
-            db_item.prospect_id= e.prospect_id,
-            db_item.policy_type_id= e.policy_type_id,
-            db_item.insurance_company_id= e.insurance_company_id,
-            db_item.premium= e.premium,
-            db_item.currency= e.currency,
-            db_item.valid_until= e.valid_until,
-            db_item.document_url= e.document_url,
-            db_item.entry_data= json.dumps(e.entry_data),
-            db_item.created_by= e.created_by,
-            db_item.status= e.status,
+            db_item.id=str(uuid.uuid4())
+            db_item.project_id= e.project_id
+            db_item.prospect_id= e.prospect_id
+            db_item.policy_type_id= e.policy_type_id
+            db_item.insurance_company_id= e.insurance_company_id
+            db_item.premium= e.premium
+            db_item.currency= e.currency
+            db_item.valid_until= e.valid_until
+            db_item.document_url= e.document_url
+            db_item.entry_data= json.dumps(e.entry_data)
+            db_item.created_by= e.created_by
+            db_item.status= e.status
             db_item.save()
             res['data'] = db_item.serialize()
 
@@ -63,14 +63,31 @@ class QuoteRepo:
         return result
 
 
+    def fetch_by_with_extras(id: str) -> QuoteResult:
+        tmp_result =  Quote\
+                        .with_('quote_extras')\
+                            .find(id)
+        
+        return tmp_result.serialize() if tmp_result else None
+
+
     def fetch_by_project_id(project_id: str) -> List[QuoteResult]:
         tmp_result =  Quote\
                         .with_('prospect')\
                         .with_('quote_extras')\
                             .where('project_id', project_id)\
                                 .get()
-        result = tmp_result.serialize()
-        return result
+
+        return tmp_result.serialize()
+
+
+    def update_has_policy_status(id:str, has_policy:bool):
+        res = {'errors': {}, 'data': None,}
+        result = Quote.where('id', id)\
+                    .update({"has_policy": has_policy})
+
+        res['data'] = result.serialize()
+        return res
 
 
 class QuoteExtraRepo:

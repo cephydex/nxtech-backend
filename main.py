@@ -1,17 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import os
 import logging
 import dotenv
 # from routes.admin.auth_router import router as auth_router
 from routes.user_router import router as user_router
 from routes.setup_router import router as setup_router
 from routes.func_router import router as func_router
-from quote_admin.controller import router as admin_quote_router
-from policy_admin.controller import router as admin_policy_router
+from admin_quote.controller import router as admin_quote_router
+from admin_policy.controller import router as admin_policy_router
+from admin_project.controller import router as admin_project_router
 from log_conf import init_logger
-import strawberry
-from strawberry.fastapi import GraphQLRouter
+# import strawberry
+# from strawberry.fastapi import GraphQLRouter
 
 
 dotenv.load_dotenv()
@@ -43,6 +43,7 @@ app = create_app()
 app.include_router(user_router, prefix="/api/v1")
 app.include_router(setup_router, prefix="/api/v1")
 app.include_router(func_router, prefix="/api/v1")
+app.include_router(admin_project_router, prefix="/api/v1")
 app.include_router(admin_quote_router, prefix="/api/v1")
 app.include_router(admin_policy_router, prefix="/api/v1")
 

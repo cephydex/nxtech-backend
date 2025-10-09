@@ -5,11 +5,8 @@ from utils.cjwt import JWTBearer
 from http import HTTPStatus
 from schemas.Resp import GenResponse
 from typing import List
-from repos.quote import QuoteExtraRepo, QuoteRepo
-from schemas.Quote import QuoteCreate
-from schemas.QuoteExtra import QuoteExtraCreate
-# from .model import PolicyCreate
-# from .service import PolicyRepo
+from .service import QuoteExtraRepo, QuoteRepo
+from .model import QuoteCreate, QuoteExtraCreate
 
 
 logger = logging.getLogger(__name__)
